@@ -1,0 +1,40 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot'  version '3.2.7'
+    id 'io.spring.dependency-management' version '1.1.5'
+    id 'com.diffplug.spotless' version '7.2.1'
+    id "com.netflix.dgs.codegen" version '8.1.1'
+}
+
+group = 'org.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '24'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'org.testcontainers:testcontainers:1.21.3'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+spotless {
+    java {
+        target 'src/**'
+        importOrder()
+        removeUnusedImports()
+        removeWildcardImports()
+        trimTrailingWhitespace()
+        prettier()
+        formatAnnotations()
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
