@@ -1,0 +1,12 @@
+"""
+Represents a base collectable item, which can be extended by specific types like art books.
+"""
+type BaseCollectable {
+    id: ID!
+    name: String!
+    description: String
+    imageUrl: String!
+    initialPrice: String!
+    marketPrice: String!
+    quantity: Int!
+}

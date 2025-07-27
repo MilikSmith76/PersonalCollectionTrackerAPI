@@ -1,0 +1,10 @@
+"""
+Represents an art book, which is a type of collectable item.
+"""
+type ArtBook {
+    id: ID!
+    baseCollectable: BaseCollectable!
+    brand: Brand!
+    publisher: Publisher!
+    isbn: String
+}

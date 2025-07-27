@@ -1,0 +1,31 @@
+"""
+Represents a set of cards, which is a collection of cards released together.
+"""
+type CardSet {
+    id: ID!
+    name: String!
+    brand: Brand!
+    series: Series!
+}
+
+"""
+Represents the rarity of a card, indicating how the card is printed.
+"""
+type CardRarity {
+    id: ID!
+    name: String!
+    brand: Brand!
+}
+
+"""
+Represents a trading card, which is a type of collectable item.
+"""
+type Card {
+    id: ID!
+    baseCollectable: BaseCollectable!
+    brand: Brand!
+    series: Series
+    rarity: CardRarity!
+    set: CardSet!
+    cardNumber: String!
+}

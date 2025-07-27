@@ -1,0 +1,21 @@
+"""
+Represents a video game console.
+"""
+type Console {
+    id: ID!
+    name: String!
+    brand: Brand!
+}
+
+"""
+Represents a video game, which is a type of collectable item.
+"""
+type VideoGame {
+    id: ID!
+    baseCollectable: BaseCollectable!
+    brand: Brand!
+    series: Series
+    publisher: Publisher!
+    console: Console!
+    skuId: String!
+}

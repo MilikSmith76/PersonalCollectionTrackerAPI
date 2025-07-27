@@ -1,0 +1,20 @@
+"""
+Represents the type of a card product, such as a booster box or pack.
+"""
+type CardProductType {
+    id: ID!
+    name: String!
+}
+
+"""
+Represents a specific sealed card product, such as a booster box or pack.
+"""
+type SealedCardProduct {
+    id: ID!
+    baseCollectable: BaseCollectable!
+    brand: Brand!
+    series: Series
+    set: CardSet!
+    type: CardProductType!
+    skuId: String!
+}

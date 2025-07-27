@@ -1,0 +1,9 @@
+"""
+Represents a publisher, which is a company or organization that publishes collectable items.
+"""
+type Publisher {
+    id: ID!
+    name: String!
+    description: String
+    logoUrl: String!
+}

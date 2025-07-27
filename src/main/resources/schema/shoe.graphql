@@ -1,0 +1,21 @@
+"""
+Represents a shoe model, which is the form factor of a shoe.
+"""
+type ShoeModel {
+    id: ID!
+    name: String!
+    brand: Brand!
+}
+
+"""
+Represents a shoe, which is a type of collectable item.
+"""
+type Shoe {
+    id: ID!
+    baseCollectable: BaseCollectable!
+    brand: Brand!
+    model: ShoeModel!
+    size: String!
+    color: String!
+    skuId: String!
+}

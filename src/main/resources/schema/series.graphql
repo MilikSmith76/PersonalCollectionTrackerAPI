@@ -1,0 +1,7 @@
+"""
+Represents an intellectual property series
+"""
+type Series {
+    id: ID!
+    name: String!
+}

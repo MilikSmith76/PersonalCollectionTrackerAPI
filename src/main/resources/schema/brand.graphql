@@ -1,0 +1,9 @@
+"""
+Represents a brand, which is a company or organization that produces collectable items.
+"""
+type Brand {
+    id: ID!
+    name: String!
+    description: String
+    logoUrl: String!
+}
