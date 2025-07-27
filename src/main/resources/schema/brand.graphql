@@ -7,3 +7,17 @@ type Brand {
     description: String
     logoUrl: String!
 }
+
+input BrandInput {
+    id: ID
+    name: String!
+    description: String
+    logoUrl: String!
+}
+
+input BrandFilter {
+    id: ID
+    name: String
+    description: String
+    logoUrl: String
+}

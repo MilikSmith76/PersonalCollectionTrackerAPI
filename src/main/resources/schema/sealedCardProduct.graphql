@@ -6,6 +6,16 @@ type CardProductType {
     name: String!
 }
 
+input CardProductTypeInput {
+    id: ID
+    name: String!
+}
+
+input CardProductTypeFilter {
+    id: ID
+    name: String!
+}
+
 """
 Represents a specific sealed card product, such as a booster box or pack.
 """
@@ -17,4 +27,23 @@ type SealedCardProduct {
     set: CardSet!
     type: CardProductType!
     skuId: String!
+}
+
+input SealedCardProductInput {
+    id: ID
+    baseCollectable: BaseCollectableInput!
+    brandId: ID!
+    seriesId: ID
+    setId: ID!
+    typeId: ID!
+    skuId: String!
+}
+
+input SealedCardProductFilter {
+    id: ID
+    brandId: ID
+    seriesId: ID
+    setId: ID
+    typeId: ID
+    skuId: String
 }

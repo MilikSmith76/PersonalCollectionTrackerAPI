@@ -7,6 +7,18 @@ type ShoeModel {
     brand: Brand!
 }
 
+input ShoeModelInput {
+    id: ID
+    name: String!
+    brandId: ID!
+}
+
+input ShoeModelFilter {
+    id: ID
+    name: String
+    brandId: ID
+}
+
 """
 Represents a shoe, which is a type of collectable item.
 """
@@ -18,4 +30,23 @@ type Shoe {
     size: String!
     color: String!
     skuId: String!
+}
+
+input ShoeInput {
+    id: ID
+    baseCollectable: BaseCollectableInput!
+    brandId: ID!
+    modelId: ID!
+    size: String!
+    color: String!
+    skuId: String!
+}
+
+input ShoeFilter {
+    id: ID
+    brandId: ID
+    modelId: ID
+    size: String
+    color: String
+    skuId: String
 }

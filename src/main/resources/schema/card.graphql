@@ -8,6 +8,20 @@ type CardSet {
     series: Series!
 }
 
+input CardSetInput {
+    id: ID
+    name: String!
+    brandId: ID!
+    seriesId: ID!
+}
+
+input CardSetFilter {
+    id: ID
+    name: String
+    brandId: ID
+    seriesId: ID
+}
+
 """
 Represents the rarity of a card, indicating how the card is printed.
 """
@@ -15,6 +29,18 @@ type CardRarity {
     id: ID!
     name: String!
     brand: Brand!
+}
+
+input CardRarityInput {
+    id: ID
+    name: String!
+    brandId: ID!
+}
+
+input CardRarityFilter {
+    id: ID
+    name: String
+    brandId: ID
 }
 
 """
@@ -28,4 +54,24 @@ type Card {
     rarity: CardRarity!
     set: CardSet!
     cardNumber: String!
+}
+
+input CardInput {
+    id: ID
+    baseCollectable: BaseCollectableInput!
+    brandId: ID!
+    seriesId: ID
+    rarityId: ID!
+    setId: ID!
+    cardNumber: String!
+}
+
+input CardFilter {
+    id: ID
+    baseCollectable: BaseCollectableFilter
+    brandId: ID
+    seriesId: ID
+    rarityId: ID
+    setId: ID
+    cardNumber: String
 }

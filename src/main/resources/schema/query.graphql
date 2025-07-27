@@ -1,0 +1,91 @@
+type Query {
+    """
+    Fetches a list of art books filtered by an input.
+    """
+    artBooks(filter: ArtBookFilter): [ArtBook!]!
+
+    """
+    Fetches a specific art book by its ID.
+    """
+    artBook(id: ID!): ArtBook
+
+    """
+    Fetches a list of cards filtered by an input.
+    """
+    cards(filter: CardFilter): [Card!]!
+
+    """
+    Fetches a specific card by its ID.
+    """
+    card(id: ID!): Card
+
+    """
+    Fetches a list of collectables filtered by an input.
+    """
+    collectables(filter: CollectableFilter): [Collectable!]!
+
+    """
+    Fetches a specific collectable by its ID.
+    """
+    collectable(id: ID!): Collectable
+
+    """
+    Fetches a list of sealed card products filtered by an input.
+    """
+    sealedCardProducts(filter: SealedCardProductFilter): [SealedCardProduct!]!
+
+    """
+    Fetches a specific sealed card product by its ID.
+    """
+    sealedCardProduct(id: ID!): SealedCardProduct
+
+    """
+    Fetches a list of shoes filtered by an input.
+    """
+    shoes(filter: ShoeFilter): [Shoe!]!
+
+    """
+    Fetches a specific shoe by its ID.
+    """
+    shoe(id: ID!): Shoe
+
+    """
+    Fetches a list of video games filtered by an input.
+    """
+    videoGames(filter: VideoGameFilter): [VideoGame!]!
+
+    """
+    Fetches a specific video game by its ID.
+    """
+    videoGame(id: ID!): VideoGame
+
+    """
+    Fetches a list of brands filtered by an input.
+    """
+    brands(filter: BrandFilter): [Brand!]!
+
+    """
+    Fetches a specific brand by its ID.
+    """
+    brand(id: ID!): Brand
+
+    """
+    Fetches a list of series filtered by an input.
+    """
+    series(filter: SeriesFilter): [Series!]!
+
+    """
+    Fetches a specific series by its ID.
+    """
+    seriesById(id: ID!): Series
+
+    """
+    Fetches a list of publishers filtered by an input.
+    """
+    publishers(filter: PublisherFilter): [Publisher!]!
+
+    """
+    Fetches a specific publisher by its ID.
+    """
+    publisher(id: ID!): Publisher
+}

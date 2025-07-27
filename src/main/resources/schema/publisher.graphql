@@ -7,3 +7,17 @@ type Publisher {
     description: String
     logoUrl: String!
 }
+
+input PublisherInput {
+    id: ID
+    name: String!
+    description: String
+    logoUrl: String!
+}
+
+input PublisherFilter {
+    id: ID
+    name: String
+    description: String
+    logoUrl: String
+}

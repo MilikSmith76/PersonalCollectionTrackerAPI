@@ -10,3 +10,23 @@ type BaseCollectable {
     marketPrice: String!
     quantity: Int!
 }
+
+input BaseCollectableInput {
+    id: ID
+    name: String!
+    description: String
+    imageUrl: String!
+    initialPrice: String!
+    marketPrice: String!
+    quantity: Int!
+}
+
+input BaseCollectableFilter {
+    id: ID
+    name: String
+    description: String
+    imageUrl: String
+    initialPrice: String
+    marketPrice: String
+    quantity: Int
+}

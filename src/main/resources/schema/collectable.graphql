@@ -7,6 +7,18 @@ type CollectableType {
     name: String!
 }
 
+input CollectableTypeInput {
+    id: ID
+    name: String!
+}
+
+input CollectableTypeFilter {
+    id: ID
+    name: String!
+    description: String
+    imageUrl: String
+}
+
 """
 Represents a collectable item, which cannot be represented by more defined collectable types.
 """
@@ -17,4 +29,21 @@ type Collectable {
     brand: Brand!
     series: Series
     skuId: String!
+}
+
+input CollectableInput {
+    id: ID
+    baseCollectable: BaseCollectableInput!
+    typeId: ID!
+    brandId: ID!
+    seriesId: ID
+    skuId: String!
+}
+
+input CollectableFilter {
+    id: ID
+    typeId: ID
+    brandId: ID
+    seriesId: ID
+    skuId: String
 }

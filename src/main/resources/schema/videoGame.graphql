@@ -7,6 +7,18 @@ type Console {
     brand: Brand!
 }
 
+input ConsoleInput {
+    id: ID
+    name: String!
+    brandId: ID!
+}
+
+input ConsoleFilter {
+    id: ID
+    name: String
+    brandId: ID
+}
+
 """
 Represents a video game, which is a type of collectable item.
 """
@@ -18,4 +30,24 @@ type VideoGame {
     publisher: Publisher!
     console: Console!
     skuId: String!
+}
+
+input VideoGameInput {
+    id: ID
+    baseCollectable: BaseCollectableInput!
+    brandId: ID!
+    seriesId: ID
+    publisherId: ID!
+    consoleId: ID!
+    skuId: String!
+}
+
+input VideoGameFilter {
+    id: ID
+    baseCollectable: BaseCollectableFilter
+    brandId: ID
+    seriesId: ID
+    publisherId: ID
+    consoleId: ID
+    skuId: String
 }

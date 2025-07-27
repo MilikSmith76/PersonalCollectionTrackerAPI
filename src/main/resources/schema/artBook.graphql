@@ -8,3 +8,19 @@ type ArtBook {
     publisher: Publisher!
     isbn: String
 }
+
+input ArtBookInput {
+    id: ID
+    baseCollectable: BaseCollectableInput!
+    brandId: ID!
+    publisherId: ID!
+    isbn: String
+}
+
+input ArtBookFilter {
+    id: ID
+    baseCollectable: BaseCollectableFilter
+    brandId: ID
+    publisherId: ID
+    isbn: String
+}

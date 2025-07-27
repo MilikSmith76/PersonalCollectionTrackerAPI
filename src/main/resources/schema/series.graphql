@@ -5,3 +5,13 @@ type Series {
     id: ID!
     name: String!
 }
+
+input SeriesInput {
+    id: ID
+    name: String!
+}
+
+input SeriesFilter {
+    id: ID
+    name: String!
+}

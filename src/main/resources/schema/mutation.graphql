@@ -1,0 +1,136 @@
+type Mutation {
+    """
+    Creates a new art book.
+    """
+    createArtBook(input: ArtBookInput!): ArtBook!
+
+    """
+    Updates an existing art book.
+    """
+    updateArtBook(input: ArtBookInput!): ArtBook!
+
+    """
+    Deletes an art book by its ID.
+    """
+    deleteArtBook(id: ID!): Boolean!
+
+    """
+    Creates a new card.
+    """
+    createCard(input: CardInput!): Card!
+
+    """
+    Updates an existing card.
+    """
+    updateCard(input: CardInput!): Card!
+
+    """
+    Deletes a card by its ID.
+    """
+    deleteCard(id: ID!): Boolean!
+
+    """
+    Creates a new collectable.
+    """
+    createCollectable(input: CollectableInput!): Collectable!
+
+    """
+    Updates an existing collectable.
+    """
+    updateCollectable(input: CollectableInput!): Collectable!
+
+    """
+    Deletes a collectable by its ID.
+    """
+    deleteCollectable(id: ID!): Boolean!
+
+    """
+    Creates a new sealed card product.
+    """
+    createSealedCardProduct(input: SealedCardProductInput!): SealedCardProduct!
+
+    """
+    Updates an existing sealed card product.
+    """
+    updateSealedCardProduct(input: SealedCardProductInput!): SealedCardProduct!
+
+    """
+    Deletes a sealed card product by its ID.
+    """
+    deleteSealedCardProduct(id: ID!): Boolean!
+
+    """
+    Creates a new shoe.
+    """
+    createShoe(input: ShoeInput!): Shoe!
+
+    """
+    Updates an existing shoe.
+    """
+    updateShoe(input: ShoeInput!): Shoe!
+
+    """
+    Deletes a shoe by its ID.
+    """
+    deleteShoe(id: ID!): Boolean!
+
+    """
+    Creates a new video game.
+    """
+    createVideoGame(input: VideoGameInput!): VideoGame!
+
+    """
+    Updates an existing video game.
+    """
+    updateVideoGame(input: VideoGameInput!): VideoGame!
+
+    """
+    Deletes a video game by its ID.
+    """
+    deleteVideoGame(id: ID!): Boolean!
+
+    """
+    Creates a new brand.
+    """
+    createBrand(input: BrandInput!): Brand!
+
+    """
+    Updates an existing brand.
+    """
+    updateBrand(input: BrandInput!): Brand!
+
+    """
+    Deletes a brand by its ID.
+    """
+    deleteBrand(id: ID!): Boolean!
+
+    """
+    Creates a new series.
+    """
+    createSeries(input: SeriesInput!): Series!
+
+    """
+    Updates an existing series.
+    """
+    updateSeries(input: SeriesInput!): Series!
+
+    """
+    Deletes a series by its ID.
+    """
+    deleteSeries(id: ID!): Boolean!
+
+    """
+    Creates a new publisher.
+    """
+    createPublisher(input: PublisherInput!): Publisher!
+
+    """
+    Updates an existing publisher.
+    """
+    updatePublisher(input: PublisherInput!): Publisher!
+
+    """
+    Deletes a publisher by its ID.
+    """
+    deletePublisher(id: ID!): Boolean!
+}
