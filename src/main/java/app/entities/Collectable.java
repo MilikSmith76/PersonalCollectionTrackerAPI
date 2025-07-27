@@ -34,14 +34,14 @@ public class Collectable {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "collectable_type_id", nullable = false)
-    private CollectableType collectableType;
+    private CollectableType type;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "brand_id", nullable = false)
     private Brand brand;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "series_id", nullable = true)
+    @JoinColumn(name = "series_id")
     private Series series;
 
     @Column(name = "sku_id", nullable = false)

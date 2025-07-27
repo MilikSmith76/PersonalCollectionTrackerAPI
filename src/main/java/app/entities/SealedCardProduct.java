@@ -37,16 +37,16 @@ public class SealedCardProduct {
     private Brand brand;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "series_id", nullable = true)
+    @JoinColumn(name = "series_id")
     private Series series;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "card_set_id", nullable = false)
-    private CardSet cardSet;
+    private CardSet set;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "cpt_id", nullable = false)
-    private CardProductType cardProductType;
+    private CardProductType type;
 
     @Column(name = "sku_id", nullable = false)
     private String skuId;

@@ -39,5 +39,5 @@ public class BaseCollectable {
     private String marketPrice;
 
     @Column(name = "description", nullable = false)
-    private Long quantity;
+    private Integer quantity;
 }

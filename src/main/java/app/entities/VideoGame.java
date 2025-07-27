@@ -37,7 +37,7 @@ public class VideoGame {
     private Brand brand;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "series_id", nullable = true)
+    @JoinColumn(name = "series_id")
     private Series series;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

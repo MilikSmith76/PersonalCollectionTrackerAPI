@@ -38,7 +38,10 @@ public class Shoe {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "shoe_model_id", nullable = false)
-    private ShoeModel shoeModel;
+    private ShoeModel model;
+
+    @Column(name = "size", nullable = false)
+    private String size;
 
     @Column(name = "color", nullable = false)
     private String color;
