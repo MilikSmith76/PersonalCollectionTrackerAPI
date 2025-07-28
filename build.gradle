@@ -26,7 +26,7 @@ dependencies {
 
 spotless {
     java {
-        target 'src/**'
+        target 'src/**/*.java'
         importOrder()
         removeUnusedImports()
         removeWildcardImports()
@@ -34,6 +34,13 @@ spotless {
         prettier(['prettier': '3.0.3', 'prettier-plugin-java': '2.3.0'])
                 .config(['parser': 'java', 'tabWidth': 4, 'plugins': ['prettier-plugin-java']])
         formatAnnotations()
+        endWithNewline()
+    }
+    format 'graphql', {
+        target 'src/main/resources/**/*.graphql'
+        trimTrailingWhitespace()
+        prettier(['prettier': '3.0.3']).config(['parser': 'graphql', 'tabWidth': 4])
+        endWithNewline()
     }
 }
 
