@@ -16,6 +16,7 @@ repositories {
 }
 
 dependencies {
+    implementation 'mysql:mysql-connector-java:8.0.28'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     testImplementation platform('org.junit:junit-bom:5.10.0')
@@ -24,9 +25,16 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
+generateJava {
+    schemaPaths = ['src/main/resources/schema']
+    packageName = 'app.generated'
+    generateClient = true
+}
+
 spotless {
     java {
         target 'src/**/*.java'
+        targetExclude '**/generated/**'
         importOrder()
         removeUnusedImports()
         removeWildcardImports()
