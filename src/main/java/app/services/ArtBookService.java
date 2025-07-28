@@ -4,11 +4,9 @@ import app.entities.ArtBookDAO;
 import app.generated.types.ArtBook;
 import app.generated.types.ArtBookFilter;
 import app.repositories.ArtBookRepository;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class ArtBookService {
@@ -25,8 +23,9 @@ public class ArtBookService {
     }
 
     public List<ArtBook> findAll(ArtBookFilter filter) {
-        return this.artBookRepository.findAll().stream()
-                .map(ArtBookDAO::toGraphQL)
-                .collect(Collectors.toList());
+        return this.artBookRepository.findAll()
+            .stream()
+            .map(ArtBookDAO::toGraphQL)
+            .collect(Collectors.toList());
     }
 }

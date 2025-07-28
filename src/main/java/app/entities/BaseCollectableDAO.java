@@ -33,10 +33,10 @@ public class BaseCollectableDAO {
     @Column(name = "image_url", nullable = false)
     private String imageUrl;
 
-    @Column(name = "initial_price")
+    @Column(name = "initial_price", nullable = false)
     private String initialPrice;
 
-    @Column(name = "market_price")
+    @Column(name = "market_price", nullable = false)
     private String marketPrice;
 
     @Column(name = "description", nullable = false)

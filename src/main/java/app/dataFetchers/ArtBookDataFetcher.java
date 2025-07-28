@@ -6,13 +6,13 @@ import app.services.ArtBookService;
 import com.netflix.graphql.dgs.DgsComponent;
 import com.netflix.graphql.dgs.DgsQuery;
 import com.netflix.graphql.dgs.InputArgument;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.List;
 import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @DgsComponent
 public class ArtBookDataFetcher {
+
     private final ArtBookService artBookService;
 
     @Autowired
@@ -27,7 +27,9 @@ public class ArtBookDataFetcher {
         }
 
         if (!id.matches("\\d+")) {
-            throw new IllegalArgumentException("Invalid ID format. ID must be a numeric string.");
+            throw new IllegalArgumentException(
+                "Invalid ID format. ID must be a numeric string."
+            );
         }
 
         return this.artBookService.findById(Long.valueOf(id));

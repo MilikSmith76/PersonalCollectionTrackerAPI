@@ -5,6 +5,7 @@ plugins {
     id 'com.diffplug.spotless' version '7.2.1'
     id 'com.netflix.dgs.codegen' version '8.1.1'
     id 'io.freefair.lombok' version '8.14'
+    id 'org.flywaydb.flyway' version '11.10.4'
 }
 
 group = 'org.example'
@@ -46,12 +47,25 @@ spotless {
         formatAnnotations()
         endWithNewline()
     }
+    sql {
+        target 'src/main/resources/**/*.sql'
+        trimTrailingWhitespace()
+        prettier(['prettier': '3.0.3']).config(['parser': 'sql', 'tabWidth': 4, 'keywordCase': 'upper'])
+        endWithNewline()
+    }
     format 'graphql', {
         target 'src/main/resources/**/*.graphql'
         trimTrailingWhitespace()
         prettier(['prettier': '3.0.3']).config(['parser': 'graphql', 'tabWidth': 4])
         endWithNewline()
     }
+}
+
+flyway {
+    url = System.getenv('DB_HOST') ?: 'jdbc:mysql://localhost:3306/personal_collection'
+    user = System.getenv('DB_USER') ?: 'root'
+    password = System.getenv('DB_PASSWORD') ?: 'password'
+    locations = ['classpath:db/migration']
 }
 
 test {
