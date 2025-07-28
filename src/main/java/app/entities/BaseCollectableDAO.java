@@ -1,14 +1,10 @@
 package app.entities;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,12 +12,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "card_set")
+@Table(name = "base_collectable")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CardSet {
+public class BaseCollectableDAO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,11 +26,18 @@ public class CardSet {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "brand_id", nullable = false)
-    private Brand brand;
+    @Column(name = "description", nullable = true)
+    private String description;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "series_id")
-    private Series series;
+    @Column(name = "image_url", nullable = false)
+    private String imageUrl;
+
+    @Column(name = "initial_price")
+    private String initialPrice;
+
+    @Column(name = "market_price")
+    private String marketPrice;
+
+    @Column(name = "description", nullable = false)
+    private Integer quantity;
 }

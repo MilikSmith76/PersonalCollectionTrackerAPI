@@ -1,6 +1,6 @@
 package app.services;
 
-import app.entities.ArtBook;
+import app.entities.ArtBookDAO;
 import app.repositories.ArtBookRepository;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ public class ArtBookService {
         this.artBookRepository = artBookRepository;
     }
 
-    public Optional<ArtBook> findById(Long id) {
+    public Optional<ArtBookDAO> findById(Long id) {
         return this.artBookRepository.findById(id);
     }
 }

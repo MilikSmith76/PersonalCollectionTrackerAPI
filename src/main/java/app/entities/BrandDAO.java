@@ -12,12 +12,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "series")
+@Table(name = "brand")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Series {
+public class BrandDAO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,4 +25,10 @@ public class Series {
 
     @Column(name = "name", nullable = false)
     private String name;
+
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "logo_url", nullable = false)
+    private String logoUrl;
 }

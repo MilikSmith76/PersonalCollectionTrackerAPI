@@ -16,12 +16,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "console")
+@Table(name = "card_set")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Console {
+public class CardSetDAO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,5 +32,9 @@ public class Console {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "brand_id", nullable = false)
-    private Brand brand;
+    private BrandDAO brand;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "series_id")
+    private SeriesDAO series;
 }

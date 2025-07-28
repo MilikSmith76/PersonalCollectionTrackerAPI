@@ -1,10 +1,14 @@
 package app.entities;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,12 +16,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "base_collectable")
+@Table(name = "shoe_model")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BaseCollectable {
+public class ShoeModelDAO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,18 +30,7 @@ public class BaseCollectable {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "description", nullable = true)
-    private String description;
-
-    @Column(name = "image_url", nullable = false)
-    private String imageUrl;
-
-    @Column(name = "initial_price")
-    private String initialPrice;
-
-    @Column(name = "market_price")
-    private String marketPrice;
-
-    @Column(name = "description", nullable = false)
-    private Integer quantity;
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "brand_id", nullable = false)
+    private BrandDAO brand;
 }

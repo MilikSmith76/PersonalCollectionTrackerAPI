@@ -17,12 +17,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "collectable")
+@Table(name = "art_book")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Collectable {
+public class ArtBookDAO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,20 +30,16 @@ public class Collectable {
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "bc_id", nullable = false)
-    private BaseCollectable baseCollectable;
-
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "collectable_type_id", nullable = false)
-    private CollectableType type;
+    private BaseCollectableDAO baseCollectable;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "brand_id", nullable = false)
-    private Brand brand;
+    private BrandDAO brand;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "series_id")
-    private Series series;
+    @JoinColumn(name = "publisher_id", nullable = false)
+    private PublisherDAO publisher;
 
-    @Column(name = "sku_id", nullable = false)
-    private String skuId;
+    @Column(name = "isbn")
+    private String isbn;
 }

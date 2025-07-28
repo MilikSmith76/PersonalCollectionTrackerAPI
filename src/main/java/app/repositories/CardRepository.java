@@ -1,8 +1,8 @@
 package app.repositories;
 
-import app.entities.Card;
+import app.entities.CardDAO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CardRepository extends JpaRepository<Card, Long> {}
+public interface CardRepository extends JpaRepository<CardDAO, Long> {}

@@ -9,7 +9,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,35 +16,21 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "shoe")
+@Table(name = "console")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Shoe {
+public class ConsoleDAO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "bc_id", nullable = false)
-    private BaseCollectable baseCollectable;
+    @Column(name = "name", nullable = false)
+    private String name;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "brand_id", nullable = false)
-    private Brand brand;
-
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "shoe_model_id", nullable = false)
-    private ShoeModel model;
-
-    @Column(name = "size", nullable = false)
-    private String size;
-
-    @Column(name = "color", nullable = false)
-    private String color;
-
-    @Column(name = "sku_id", nullable = false)
-    private String skuId;
+    private BrandDAO brand;
 }

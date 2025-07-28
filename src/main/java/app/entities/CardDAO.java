@@ -22,7 +22,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Card {
+public class CardDAO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,23 +30,23 @@ public class Card {
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "bc_id", nullable = false)
-    private BaseCollectable baseCollectable;
+    private BaseCollectableDAO baseCollectable;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "brand_id", nullable = false)
-    private Brand brand;
+    private BrandDAO brand;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "series_id")
-    private Series series;
+    private SeriesDAO series;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "card_set_id", nullable = false)
-    private CardSet set;
+    private CardSetDAO set;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "card_rarity_id", nullable = false)
-    private CardRarity rarity;
+    private CardRarityDAO rarity;
 
     @Column(name = "card_number", nullable = false)
     private String cardNumber;

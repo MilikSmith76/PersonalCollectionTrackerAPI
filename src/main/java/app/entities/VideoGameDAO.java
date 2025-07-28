@@ -22,7 +22,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class VideoGame {
+public class VideoGameDAO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,23 +30,23 @@ public class VideoGame {
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "bc_id", nullable = false)
-    private BaseCollectable baseCollectable;
+    private BaseCollectableDAO baseCollectable;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "brand_id", nullable = false)
-    private Brand brand;
+    private BrandDAO brand;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "series_id")
-    private Series series;
+    private SeriesDAO series;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "publisher_id", nullable = false)
-    private Publisher publisher;
+    private PublisherDAO publisher;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "console_id", nullable = false)
-    private Console console;
+    private ConsoleDAO console;
 
     @Column(name = "sku_id", nullable = false)
     private String skuId;

@@ -17,7 +17,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Publisher {
+public class PublisherDAO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
