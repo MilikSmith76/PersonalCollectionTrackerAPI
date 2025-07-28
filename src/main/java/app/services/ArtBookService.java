@@ -1,8 +1,14 @@
 package app.services;
 
 import app.entities.ArtBookDAO;
+import app.generated.types.ArtBook;
+import app.generated.types.ArtBookFilter;
 import app.repositories.ArtBookRepository;
+
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class ArtBookService {
@@ -14,7 +20,13 @@ public class ArtBookService {
         this.artBookRepository = artBookRepository;
     }
 
-    public Optional<ArtBookDAO> findById(Long id) {
-        return this.artBookRepository.findById(id);
+    public Optional<ArtBook> findById(Long id) {
+        return this.artBookRepository.findById(id).map(ArtBookDAO::toGraphQL);
+    }
+
+    public List<ArtBook> findAll(ArtBookFilter filter) {
+        return this.artBookRepository.findAll().stream()
+                .map(ArtBookDAO::toGraphQL)
+                .collect(Collectors.toList());
     }
 }

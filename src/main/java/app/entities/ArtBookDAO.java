@@ -1,5 +1,6 @@
 package app.entities;
 
+import app.generated.types.ArtBook;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -42,4 +43,15 @@ public class ArtBookDAO {
 
     @Column(name = "isbn")
     private String isbn;
+
+    public ArtBook toGraphQL() {
+        return ArtBook
+            .newBuilder()
+            .id(String.valueOf(this.id))
+            .baseCollectable(this.baseCollectable.toGraphQL())
+            .brand(this.brand.toGraphQL())
+            .publisher(this.publisher.toGraphQL())
+            .isbn(this.isbn)
+            .build();
+    }
 }

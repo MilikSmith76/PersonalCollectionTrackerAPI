@@ -1,5 +1,6 @@
 package app.entities;
 
+import app.generated.types.BaseCollectable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -40,4 +41,17 @@ public class BaseCollectableDAO {
 
     @Column(name = "description", nullable = false)
     private Integer quantity;
+
+    public BaseCollectable toGraphQL() {
+        return BaseCollectable
+            .newBuilder()
+            .id(String.valueOf(this.id))
+            .name(this.name)
+            .description(this.description)
+            .imageUrl(this.imageUrl)
+            .initialPrice(this.initialPrice)
+            .marketPrice(this.marketPrice)
+            .quantity(this.quantity)
+            .build();
+    }
 }

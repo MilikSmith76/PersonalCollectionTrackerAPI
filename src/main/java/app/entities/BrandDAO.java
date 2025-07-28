@@ -1,5 +1,6 @@
 package app.entities;
 
+import app.generated.types.Brand;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,4 +32,14 @@ public class BrandDAO {
 
     @Column(name = "logo_url", nullable = false)
     private String logoUrl;
+
+    public Brand toGraphQL() {
+        return Brand
+            .newBuilder()
+            .id(String.valueOf(id))
+            .name(name)
+            .description(description)
+            .logoUrl(logoUrl)
+            .build();
+    }
 }
