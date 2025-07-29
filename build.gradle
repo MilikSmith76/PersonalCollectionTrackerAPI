@@ -50,7 +50,8 @@ spotless {
     sql {
         target 'src/main/resources/**/*.sql'
         trimTrailingWhitespace()
-        prettier(['prettier': '3.0.3']).config(['parser': 'sql', 'tabWidth': 4, 'keywordCase': 'upper'])
+        prettier(['prettier': '3.0.3', 'prettier-plugin-sql': '0.19.2'])
+                .config(['parser': 'sql', 'tabWidth': 4, 'keywordCase': 'upper', 'plugins': ['prettier-plugin-sql']])
         endWithNewline()
     }
     format 'graphql', {
