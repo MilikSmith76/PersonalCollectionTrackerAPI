@@ -27,7 +27,7 @@ public class BaseCollectableDAO {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "description", nullable = true)
+    @Column(name = "description")
     private String description;
 
     @Column(name = "image_url", nullable = false)
@@ -39,7 +39,7 @@ public class BaseCollectableDAO {
     @Column(name = "market_price", nullable = false)
     private String marketPrice;
 
-    @Column(name = "description", nullable = false)
+    @Column(name = "quantity", nullable = false)
     private Integer quantity;
 
     public BaseCollectable toGraphQL() {

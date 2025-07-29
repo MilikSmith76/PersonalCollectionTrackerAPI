@@ -9,8 +9,9 @@ buildscript {
 
 plugins {
     id 'java'
-    id 'org.springframework.boot'  version '3.2.7'
-    id 'io.spring.dependency-management' version '1.1.5'
+    id 'application'
+    id 'org.springframework.boot'  version '3.5.4'
+    id 'io.spring.dependency-management' version '1.1.7'
     id 'com.diffplug.spotless' version '7.2.1'
     id 'com.netflix.dgs.codegen' version '8.1.1'
     id 'io.freefair.lombok' version '8.14'
@@ -26,11 +27,11 @@ repositories {
 }
 
 dependencies {
-    implementation platform ('com.netflix.graphql.dgs:graphql-dgs-platform-dependencies')
+    implementation platform ('com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:10.2.4')
     implementation 'com.netflix.graphql.dgs:dgs-starter'
     implementation 'com.mysql:mysql-connector-j:9.3.0'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web:3.5.4'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa:3.5.4'
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testImplementation 'org.testcontainers:testcontainers:1.21.3'
@@ -76,6 +77,14 @@ flyway {
     url = System.getenv('DB_HOST') ?: 'jdbc:mysql://localhost:3306/personal_collection'
     user = System.getenv('DB_USER') ?: 'root'
     password = System.getenv('DB_PASSWORD') ?: 'password'
+}
+
+springBoot {
+    mainClass = 'app.Application'
+}
+
+application {
+    mainClass = 'app.Application'
 }
 
 test {
