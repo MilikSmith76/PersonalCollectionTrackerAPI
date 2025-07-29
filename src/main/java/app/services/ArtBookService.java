@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ArtBookService {
 
-    ArtBookRepository artBookRepository;
+    private final ArtBookRepository artBookRepository;
 
     @Autowired
     public ArtBookService(ArtBookRepository artBookRepository) {

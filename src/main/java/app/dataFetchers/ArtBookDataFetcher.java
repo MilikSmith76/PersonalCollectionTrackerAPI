@@ -1,5 +1,7 @@
 package app.dataFetchers;
 
+import static app.utils.Utilities.fromGraphQLId;
+
 import app.generated.types.ArtBook;
 import app.generated.types.ArtBookFilter;
 import app.services.ArtBookService;
@@ -22,17 +24,8 @@ public class ArtBookDataFetcher {
 
     @DgsQuery
     public Optional<ArtBook> artBook(@InputArgument String id) {
-        if (id == null || id.isEmpty()) {
-            return Optional.empty();
-        }
-
-        if (!id.matches("\\d+")) {
-            throw new IllegalArgumentException(
-                "Invalid ID format. ID must be a numeric string."
-            );
-        }
-
-        return this.artBookService.findById(Long.valueOf(id));
+        Long parsedId = fromGraphQLId(id);
+        return this.artBookService.findById(parsedId);
     }
 
     @DgsQuery
