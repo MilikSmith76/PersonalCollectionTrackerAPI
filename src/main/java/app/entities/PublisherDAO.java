@@ -1,6 +1,7 @@
 package app.entities;
 
 import app.generated.types.Publisher;
+import app.generated.types.PublisherInput;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,6 +33,13 @@ public class PublisherDAO {
 
     @Column(name = "logo_url", nullable = false)
     private String logoUrl;
+
+    public PublisherDAO(PublisherInput input) {
+        this.id = input.getId() != null ? Long.valueOf(input.getId()) : null;
+        this.name = input.getName();
+        this.description = input.getDescription();
+        this.logoUrl = input.getLogoUrl();
+    }
 
     public Publisher toGraphQL() {
         return Publisher
