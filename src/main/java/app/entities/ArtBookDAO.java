@@ -1,6 +1,7 @@
 package app.entities;
 
 import app.generated.types.ArtBook;
+import app.generated.types.ArtBookInput;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,23 +27,30 @@ import lombok.Setter;
 public class ArtBookDAO {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "bc_id", nullable = false)
     private BaseCollectableDAO baseCollectable;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "brand_id", nullable = false)
     private BrandDAO brand;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "publisher_id", nullable = false)
     private PublisherDAO publisher;
 
     @Column(name = "isbn")
     private String isbn;
+
+    public ArtBookDAO(ArtBookInput input) {
+        this.id = input.getId() != null ? Long.valueOf(input.getId()) : null;
+        this.baseCollectable =
+        new BaseCollectableDAO(input.getBaseCollectable());
+        this.isbn = input.getIsbn();
+    }
 
     public ArtBook toGraphQL() {
         return ArtBook

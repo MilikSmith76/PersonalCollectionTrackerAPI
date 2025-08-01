@@ -4,8 +4,10 @@ import static app.utils.Utilities.fromGraphQLId;
 
 import app.generated.types.ArtBook;
 import app.generated.types.ArtBookFilter;
+import app.generated.types.ArtBookInput;
 import app.services.ArtBookService;
 import com.netflix.graphql.dgs.DgsComponent;
+import com.netflix.graphql.dgs.DgsMutation;
 import com.netflix.graphql.dgs.DgsQuery;
 import com.netflix.graphql.dgs.InputArgument;
 import java.util.List;
@@ -30,6 +32,22 @@ public class ArtBookDataFetcher {
 
     @DgsQuery
     public List<ArtBook> artBooks(@InputArgument ArtBookFilter filter) {
-        return this.artBookService.findAll(filter);
+        return this.artBookService.findByCriteria(filter);
+    }
+
+    @DgsMutation
+    public Optional<ArtBook> createArtBook(@InputArgument ArtBookInput input) {
+        return this.artBookService.save(input);
+    }
+
+    @DgsMutation
+    public Optional<ArtBook> updateArtBook(@InputArgument ArtBookInput input) {
+        return this.artBookService.update(input);
+    }
+
+    @DgsMutation
+    public Boolean deleteArtBook(@InputArgument String id) {
+        Long parsedId = fromGraphQLId(id);
+        return artBookService.delete(parsedId);
     }
 }

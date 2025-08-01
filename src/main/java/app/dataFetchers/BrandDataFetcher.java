@@ -36,7 +36,7 @@ public class BrandDataFetcher {
     }
 
     @DgsMutation
-    public Optional<Brand> saveBrand(@InputArgument BrandInput input) {
+    public Optional<Brand> createBrand(@InputArgument BrandInput input) {
         return this.brandService.save(input);
     }
 

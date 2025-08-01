@@ -25,6 +25,16 @@ public class BrandService {
         return this.brandRepository.findById(id).map(BrandDAO::toGraphQL);
     }
 
+    public BrandDAO validateAndFindById(Long id) {
+        return brandRepository
+            .findById(id)
+            .orElseThrow(() ->
+                new IllegalArgumentException(
+                    "Brand with ID " + id + " does not exist."
+                )
+            );
+    }
+
     public List<Brand> findByCriteria(BrandFilter filter) {
         return this.brandRepository.findByCriteria(filter)
             .stream()
@@ -43,7 +53,7 @@ public class BrandService {
     }
 
     private void validateId(Long id) throws IllegalArgumentException {
-        if (!brandRepository.existsById(id)) {
+        if (!this.brandRepository.existsById(id)) {
             throw new IllegalArgumentException(
                 "Brand with ID " + id + " does not exist."
             );
@@ -65,7 +75,7 @@ public class BrandService {
     public Boolean delete(Long id) {
         this.validateId(id);
 
-        brandRepository.deleteById(id);
+        this.brandRepository.deleteById(id);
         return true;
     }
 }

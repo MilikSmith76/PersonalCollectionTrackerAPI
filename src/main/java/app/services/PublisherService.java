@@ -26,6 +26,16 @@ public class PublisherService {
             .map(PublisherDAO::toGraphQL);
     }
 
+    public PublisherDAO validateAndFindById(Long id) {
+        return publisherRepository
+            .findById(id)
+            .orElseThrow(() ->
+                new IllegalArgumentException(
+                    "Publisher with ID " + id + " does not exist."
+                )
+            );
+    }
+
     public List<Publisher> findByCriteria(PublisherFilter filter) {
         return this.publisherRepository.findByCriteria(filter)
             .stream()
