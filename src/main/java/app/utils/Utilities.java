@@ -18,6 +18,6 @@ public class Utilities {
             throw new IllegalArgumentException("Invalid ID format: " + id);
         }
 
-        return isNumber(id) ? Long.valueOf(id) : null;
+        return parsedId;
     }
 }

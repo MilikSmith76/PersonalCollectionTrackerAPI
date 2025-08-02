@@ -1,7 +1,5 @@
 package app.dataFetchers;
 
-import static app.utils.Utilities.fromGraphQLId;
-
 import app.generated.types.Brand;
 import app.generated.types.BrandFilter;
 import app.generated.types.BrandInput;
@@ -26,8 +24,7 @@ public class BrandDataFetcher {
 
     @DgsQuery
     public Optional<Brand> brand(@InputArgument String id) {
-        Long parsedId = fromGraphQLId(id);
-        return this.brandService.findById(parsedId);
+        return this.brandService.findById(id);
     }
 
     @DgsQuery
@@ -42,12 +39,11 @@ public class BrandDataFetcher {
 
     @DgsMutation
     public Optional<Brand> updateBrand(@InputArgument BrandInput input) {
-        return this.brandService.update(input);
+        return this.brandService.update(input, input.getId());
     }
 
     @DgsMutation
     public Boolean deleteBrand(@InputArgument String id) {
-        Long parsedId = fromGraphQLId(id);
-        return brandService.delete(parsedId);
+        return brandService.delete(id);
     }
 }

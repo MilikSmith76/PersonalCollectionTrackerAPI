@@ -19,7 +19,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BrandDAO {
+public class BrandDAO extends EntityDAO<Brand> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,6 +39,10 @@ public class BrandDAO {
         this.name = input.getName();
         this.description = input.getDescription();
         this.logoUrl = input.getLogoUrl();
+    }
+
+    public static BrandDAO fromGraphQL(BrandInput input) {
+        return new BrandDAO(input);
     }
 
     public Brand toGraphQL() {

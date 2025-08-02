@@ -9,7 +9,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BrandRepository extends JpaRepository<BrandDAO, Long> {
+public interface BrandRepository
+    extends
+        JpaRepository<BrandDAO, Long>, EntityRepository<BrandDAO, BrandFilter> {
     default List<BrandDAO> findByCriteria(BrandFilter filter) {
         if (filter == null) {
             return this.findAll();
