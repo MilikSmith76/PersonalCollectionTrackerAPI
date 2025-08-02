@@ -1,7 +1,5 @@
 package app.dataFetchers;
 
-import static app.utils.Utilities.fromGraphQLId;
-
 import app.generated.types.Publisher;
 import app.generated.types.PublisherFilter;
 import app.generated.types.PublisherInput;
@@ -26,8 +24,7 @@ public class PublisherDataFetcher {
 
     @DgsQuery
     public Optional<Publisher> publisher(@InputArgument String id) {
-        Long parsedId = fromGraphQLId(id);
-        return this.publisherService.findById(parsedId);
+        return this.publisherService.findById(id);
     }
 
     @DgsQuery
@@ -46,12 +43,11 @@ public class PublisherDataFetcher {
     public Optional<Publisher> updatePublisher(
         @InputArgument PublisherInput input
     ) {
-        return this.publisherService.update(input);
+        return this.publisherService.update(input, input.getId());
     }
 
     @DgsMutation
     public Boolean deletePublisher(@InputArgument String id) {
-        Long parsedId = fromGraphQLId(id);
-        return publisherService.delete(parsedId);
+        return publisherService.delete(id);
     }
 }

@@ -9,7 +9,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PublisherRepository extends JpaRepository<PublisherDAO, Long> {
+public interface PublisherRepository
+    extends
+        JpaRepository<PublisherDAO, Long>,
+        EntityRepository<PublisherDAO, PublisherFilter> {
     default List<PublisherDAO> findByCriteria(PublisherFilter filter) {
         if (filter == null) {
             return this.findAll();

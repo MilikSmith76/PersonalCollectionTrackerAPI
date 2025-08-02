@@ -19,10 +19,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PublisherDAO {
+public class PublisherDAO extends EntityDAO<Publisher> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name", nullable = false, unique = true)
@@ -39,6 +39,10 @@ public class PublisherDAO {
         this.name = input.getName();
         this.description = input.getDescription();
         this.logoUrl = input.getLogoUrl();
+    }
+
+    public static PublisherDAO fromGraphQL(PublisherInput input) {
+        return new PublisherDAO(input);
     }
 
     public Publisher toGraphQL() {
