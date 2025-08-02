@@ -13,6 +13,7 @@ public interface PublisherRepository
     extends
         JpaRepository<PublisherDAO, Long>,
         EntityRepository<PublisherDAO, PublisherFilter> {
+    @Override
     default List<PublisherDAO> findByCriteria(PublisherFilter filter) {
         if (filter == null) {
             return this.findAll();

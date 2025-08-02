@@ -16,6 +16,7 @@ public interface ArtBookRepository
         JpaRepository<ArtBookDAO, Long>,
         JpaSpecificationExecutor<ArtBookDAO>,
         EntityRepository<ArtBookDAO, ArtBookFilter> {
+    @Override
     default List<ArtBookDAO> findByCriteria(ArtBookFilter filter) {
         if (filter == null) {
             return this.findAll();

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 public interface BrandRepository
     extends
         JpaRepository<BrandDAO, Long>, EntityRepository<BrandDAO, BrandFilter> {
+    @Override
     default List<BrandDAO> findByCriteria(BrandFilter filter) {
         if (filter == null) {
             return this.findAll();
