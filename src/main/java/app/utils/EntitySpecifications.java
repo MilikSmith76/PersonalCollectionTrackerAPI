@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.data.jpa.domain.Specification;
 
-public class EntitySpecifications<T> {
+public class EntitySpecifications<Entity> {
 
-    private final List<Specification<T>> specifications;
+    private final List<Specification<Entity>> specifications;
 
     public EntitySpecifications() {
         this.specifications = new ArrayList<>();
@@ -21,12 +21,12 @@ public class EntitySpecifications<T> {
     }
 
     public void hasBaseCollectable(BaseCollectableFilter filter) {
-        Specification<T> baseCollectorSpecification = (
+        Specification<Entity> baseCollectorSpecification = (
             root,
             query,
             criteriaBuilder
         ) -> {
-            Join<T, BaseCollectableDAO> baseCollectableJoin = root.join(
+            Join<Entity, BaseCollectableDAO> baseCollectableJoin = root.join(
                 "baseCollectable"
             );
 
@@ -86,7 +86,7 @@ public class EntitySpecifications<T> {
     }
 
     public void hasBrandId(Long brandId) {
-        Specification<T> brandIdSpecification = (
+        Specification<Entity> brandIdSpecification = (
                 root,
                 query,
                 criteriaBuilder
@@ -97,7 +97,7 @@ public class EntitySpecifications<T> {
     }
 
     public void hasSeriesId(Long seriesId) {
-        Specification<T> seriesIdSpecification = (
+        Specification<Entity> seriesIdSpecification = (
                 root,
                 query,
                 criteriaBuilder
@@ -108,7 +108,7 @@ public class EntitySpecifications<T> {
     }
 
     public void hasPublisherId(Long publisherId) {
-        Specification<T> publisherIdSpecification = (
+        Specification<Entity> publisherIdSpecification = (
                 root,
                 query,
                 criteriaBuilder
@@ -119,14 +119,18 @@ public class EntitySpecifications<T> {
     }
 
     public void hasField(String fieldName, Object value) {
-        Specification<T> fieldSpecification = (root, query, criteriaBuilder) ->
+        Specification<Entity> fieldSpecification = (
+                root,
+                query,
+                criteriaBuilder
+            ) ->
             criteriaBuilder.equal(root.get(fieldName), value);
 
         this.specifications.add(fieldSpecification);
     }
 
     public void hasFieldLike(String fieldName, String value) {
-        Specification<T> fieldLikeSpecification = (
+        Specification<Entity> fieldLikeSpecification = (
                 root,
                 query,
                 criteriaBuilder
@@ -139,7 +143,7 @@ public class EntitySpecifications<T> {
         this.specifications.add(fieldLikeSpecification);
     }
 
-    public Specification<T> getSpecifications() {
+    public Specification<Entity> getSpecifications() {
         return Specification.allOf(this.specifications);
     }
 }

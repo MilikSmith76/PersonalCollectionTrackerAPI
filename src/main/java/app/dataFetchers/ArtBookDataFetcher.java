@@ -1,7 +1,5 @@
 package app.dataFetchers;
 
-import static app.utils.Utilities.fromGraphQLId;
-
 import app.generated.types.ArtBook;
 import app.generated.types.ArtBookFilter;
 import app.generated.types.ArtBookInput;
@@ -26,8 +24,7 @@ public class ArtBookDataFetcher {
 
     @DgsQuery
     public Optional<ArtBook> artBook(@InputArgument String id) {
-        Long parsedId = fromGraphQLId(id);
-        return this.artBookService.findById(parsedId);
+        return this.artBookService.findById(id);
     }
 
     @DgsQuery
@@ -42,12 +39,11 @@ public class ArtBookDataFetcher {
 
     @DgsMutation
     public Optional<ArtBook> updateArtBook(@InputArgument ArtBookInput input) {
-        return this.artBookService.update(input);
+        return this.artBookService.update(input, input.getId());
     }
 
     @DgsMutation
     public Boolean deleteArtBook(@InputArgument String id) {
-        Long parsedId = fromGraphQLId(id);
-        return artBookService.delete(parsedId);
+        return artBookService.delete(id);
     }
 }

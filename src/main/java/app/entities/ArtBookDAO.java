@@ -24,7 +24,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ArtBookDAO {
+public class ArtBookDAO extends EntityDAO<ArtBook> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

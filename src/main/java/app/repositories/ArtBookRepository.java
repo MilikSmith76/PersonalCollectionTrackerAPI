@@ -13,7 +13,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ArtBookRepository
     extends
-        JpaRepository<ArtBookDAO, Long>, JpaSpecificationExecutor<ArtBookDAO> {
+        JpaRepository<ArtBookDAO, Long>,
+        JpaSpecificationExecutor<ArtBookDAO>,
+        EntityRepository<ArtBookDAO, ArtBookFilter> {
     default List<ArtBookDAO> findByCriteria(ArtBookFilter filter) {
         if (filter == null) {
             return this.findAll();

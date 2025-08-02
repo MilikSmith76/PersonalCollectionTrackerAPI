@@ -7,16 +7,19 @@ import app.generated.types.ArtBook;
 import app.generated.types.ArtBookFilter;
 import app.generated.types.ArtBookInput;
 import app.repositories.ArtBookRepository;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ArtBookService {
-
-    private final ArtBookRepository artBookRepository;
+public class ArtBookService
+    extends EntityService<
+        ArtBookDAO,
+        ArtBook,
+        ArtBookRepository,
+        ArtBookInput,
+        ArtBookFilter
+    > {
 
     private final BrandService brandService;
 
@@ -28,23 +31,13 @@ public class ArtBookService {
         BrandService brandService,
         PublisherService publisherService
     ) {
-        this.artBookRepository = artBookRepository;
+        super(artBookRepository);
         this.brandService = brandService;
         this.publisherService = publisherService;
     }
 
-    public Optional<ArtBook> findById(Long id) {
-        return this.artBookRepository.findById(id).map(ArtBookDAO::toGraphQL);
-    }
-
-    public List<ArtBook> findByCriteria(ArtBookFilter filter) {
-        return this.artBookRepository.findByCriteria(filter)
-            .stream()
-            .map(ArtBookDAO::toGraphQL)
-            .collect(Collectors.toList());
-    }
-
-    private Optional<ArtBook> merge(ArtBookInput input) {
+    @Override
+    protected Optional<ArtBook> merge(ArtBookInput input) {
         Long brandId = fromGraphQLId(input.getBrandId());
         Long publisherId = fromGraphQLId(input.getPublisherId());
 
@@ -54,34 +47,7 @@ public class ArtBookService {
             this.publisherService.validateAndFindById(publisherId)
         );
 
-        ArtBookDAO savedArtBook = this.artBookRepository.save(artBookDAO);
+        ArtBookDAO savedArtBook = this.repository.save(artBookDAO);
         return Optional.of(savedArtBook.toGraphQL());
-    }
-
-    public Optional<ArtBook> save(ArtBookInput input) {
-        return this.merge(input);
-    }
-
-    private void validateId(Long id) throws IllegalArgumentException {
-        if (!artBookRepository.existsById(id)) {
-            throw new IllegalArgumentException(
-                "Art Book with ID " + id + " does not exist."
-            );
-        }
-    }
-
-    public Optional<ArtBook> update(ArtBookInput input) {
-        Long id = fromGraphQLId(input.getId());
-
-        this.validateId(id);
-
-        return this.merge(input);
-    }
-
-    public Boolean delete(Long id) {
-        this.validateId(id);
-
-        this.artBookRepository.deleteById(id);
-        return true;
     }
 }
