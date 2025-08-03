@@ -1,5 +1,7 @@
 package app.entities;
 
+import app.generated.types.Shoe;
+import app.generated.types.ShoeInput;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,27 +18,30 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import static app.utils.Utilities.getIdOrNull;
+import static app.utils.Utilities.toGraphQLId;
+
 @Entity
 @Table(name = "shoe")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ShoeDAO {
+public class ShoeDAO extends EntityDAO<Shoe> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "bc_id", nullable = false)
     private BaseCollectableDAO baseCollectable;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "brand_id", nullable = false)
     private BrandDAO brand;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "shoe_model_id", nullable = false)
     private ShoeModelDAO model;
 
@@ -48,4 +53,30 @@ public class ShoeDAO {
 
     @Column(name = "sku_id", nullable = false)
     private String skuId;
+
+    public ShoeDAO(ShoeInput input) {
+        this.id = getIdOrNull(input.getId());
+        this.baseCollectable = BaseCollectableDAO.fromGraphQL(input.getBaseCollectable());
+        this.size = input.getSize();
+        this.color = input.getColor();
+        this.skuId = input.getSkuId();
+    }
+
+    public static ShoeDAO fromGraphQL(ShoeInput input) {
+        return new ShoeDAO(input);
+    }
+
+    @Override
+    public Shoe toGraphQL() {
+        return Shoe
+            .newBuilder()
+            .id(toGraphQLId(this.id))
+            .baseCollectable(this.baseCollectable.toGraphQL())
+            .brand(this.brand.toGraphQL())
+            .model(this.model.toGraphQL())
+            .size(this.size)
+            .color(this.color)
+            .skuId(this.skuId)
+            .build();
+    }
 }

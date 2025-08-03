@@ -41,7 +41,7 @@ public class ArtBookService
         Long brandId = fromGraphQLId(input.getBrandId());
         Long publisherId = fromGraphQLId(input.getPublisherId());
 
-        ArtBookDAO artBookDAO = new ArtBookDAO(input);
+        ArtBookDAO artBookDAO = ArtBookDAO.fromGraphQL(input);
         artBookDAO.setBrand(this.brandService.validateAndFindById(brandId));
         artBookDAO.setPublisher(
             this.publisherService.validateAndFindById(publisherId)

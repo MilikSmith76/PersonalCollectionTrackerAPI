@@ -1,5 +1,7 @@
 package app.entities;
 
+import app.generated.types.VideoGame;
+import app.generated.types.VideoGameInput;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,38 +18,66 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import static app.utils.Utilities.getEntityGQLOrNull;
+import static app.utils.Utilities.getIdOrNull;
+import static app.utils.Utilities.toGraphQLId;
+
 @Entity
 @Table(name = "video_game")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class VideoGameDAO {
+public class VideoGameDAO extends EntityDAO<VideoGame> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "bc_id", nullable = false)
     private BaseCollectableDAO baseCollectable;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "brand_id", nullable = false)
     private BrandDAO brand;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "series_id")
     private SeriesDAO series;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "publisher_id", nullable = false)
     private PublisherDAO publisher;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "console_id", nullable = false)
     private ConsoleDAO console;
 
     @Column(name = "sku_id", nullable = false)
     private String skuId;
+
+    public VideoGameDAO(VideoGameInput input) {
+        this.id = getIdOrNull(input.getId());
+        this.baseCollectable = BaseCollectableDAO.fromGraphQL(input.getBaseCollectable());
+        this.skuId = input.getSkuId();
+    }
+
+    public static VideoGameDAO fromGraphQL(VideoGameInput input) {
+        return new VideoGameDAO(input);
+    }
+
+    @Override
+    public VideoGame toGraphQL() {
+        return VideoGame
+            .newBuilder()
+            .id(toGraphQLId(this.id))
+            .baseCollectable(this.baseCollectable.toGraphQL())
+            .brand(this.brand.toGraphQL())
+            .series(getEntityGQLOrNull(this.series))
+            .publisher(this.publisher.toGraphQL())
+            .console(this.console.toGraphQL())
+            .skuId(this.skuId)
+            .build();
+    }
 }

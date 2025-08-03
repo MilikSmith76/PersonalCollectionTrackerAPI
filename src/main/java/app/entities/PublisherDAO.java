@@ -13,6 +13,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import static app.utils.Utilities.getIdOrNull;
+import static app.utils.Utilities.toGraphQLId;
+
 @Entity
 @Table(name = "publisher")
 @Getter
@@ -35,7 +38,7 @@ public class PublisherDAO extends EntityDAO<Publisher> {
     private String logoUrl;
 
     public PublisherDAO(PublisherInput input) {
-        this.id = input.getId() != null ? Long.valueOf(input.getId()) : null;
+        this.id = getIdOrNull(input.getId());
         this.name = input.getName();
         this.description = input.getDescription();
         this.logoUrl = input.getLogoUrl();
@@ -45,13 +48,14 @@ public class PublisherDAO extends EntityDAO<Publisher> {
         return new PublisherDAO(input);
     }
 
+    @Override
     public Publisher toGraphQL() {
         return Publisher
             .newBuilder()
-            .id(String.valueOf(id))
-            .name(name)
-            .description(description)
-            .logoUrl(logoUrl)
+            .id(toGraphQLId(this.id))
+            .name(this.name)
+            .description(this.description)
+            .logoUrl(this.logoUrl)
             .build();
     }
 }

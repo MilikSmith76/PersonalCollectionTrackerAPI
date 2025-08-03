@@ -13,13 +13,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import static app.utils.Utilities.getIdOrNull;
+import static app.utils.Utilities.toGraphQLId;
+
 @Entity
 @Table(name = "base_collectable")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BaseCollectableDAO {
+public class BaseCollectableDAO extends EntityDAO<BaseCollectable> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,7 +47,7 @@ public class BaseCollectableDAO {
     private Integer quantity;
 
     public BaseCollectableDAO(BaseCollectableInput input) {
-        this.id = input.getId() != null ? Long.valueOf(input.getId()) : null;
+        this.id = getIdOrNull(input.getId());
         this.name = input.getName();
         this.description = input.getDescription();
         this.imageUrl = input.getImageUrl();
@@ -53,10 +56,15 @@ public class BaseCollectableDAO {
         this.quantity = input.getQuantity();
     }
 
+    public static BaseCollectableDAO fromGraphQL(BaseCollectableInput input) {
+        return new BaseCollectableDAO(input);
+    }
+
+    @Override
     public BaseCollectable toGraphQL() {
         return BaseCollectable
             .newBuilder()
-            .id(String.valueOf(this.id))
+            .id(toGraphQLId(this.id))
             .name(this.name)
             .description(this.description)
             .imageUrl(this.imageUrl)

@@ -13,6 +13,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import static app.utils.Utilities.getIdOrNull;
+import static app.utils.Utilities.toGraphQLId;
+
 @Entity
 @Table(name = "series")
 @Getter
@@ -22,14 +25,14 @@ import lombok.Setter;
 public class SeriesDAO extends EntityDAO<Series> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
     public SeriesDAO(SeriesInput input) {
-        this.id = input.getId() != null ? Long.valueOf(input.getId()) : null;
+        this.id = getIdOrNull(input.getId());
         this.name = input.getName();
     }
 
@@ -39,6 +42,10 @@ public class SeriesDAO extends EntityDAO<Series> {
 
     @Override
     public Series toGraphQL() {
-        return null;
+        return Series
+            .newBuilder()
+            .id(toGraphQLId(this.id))
+            .name(this.name)
+            .build();
     }
 }

@@ -18,6 +18,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import static app.utils.Utilities.getIdOrNull;
+import static app.utils.Utilities.toGraphQLId;
+
 @Entity
 @Table(name = "art_book")
 @Getter
@@ -46,16 +49,21 @@ public class ArtBookDAO extends EntityDAO<ArtBook> {
     private String isbn;
 
     public ArtBookDAO(ArtBookInput input) {
-        this.id = input.getId() != null ? Long.valueOf(input.getId()) : null;
+        this.id = getIdOrNull(input.getId());
         this.baseCollectable =
         new BaseCollectableDAO(input.getBaseCollectable());
         this.isbn = input.getIsbn();
     }
 
+    public static ArtBookDAO fromGraphQL(ArtBookInput input) {
+        return new ArtBookDAO(input);
+    }
+
+    @Override
     public ArtBook toGraphQL() {
         return ArtBook
             .newBuilder()
-            .id(String.valueOf(this.id))
+            .id(toGraphQLId(this.id))
             .baseCollectable(this.baseCollectable.toGraphQL())
             .brand(this.brand.toGraphQL())
             .publisher(this.publisher.toGraphQL())

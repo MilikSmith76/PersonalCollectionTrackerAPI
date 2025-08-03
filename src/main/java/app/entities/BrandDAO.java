@@ -13,6 +13,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import static app.utils.Utilities.getIdOrNull;
+import static app.utils.Utilities.toGraphQLId;
+
 @Entity
 @Table(name = "brand")
 @Getter
@@ -35,7 +38,7 @@ public class BrandDAO extends EntityDAO<Brand> {
     private String logoUrl;
 
     public BrandDAO(BrandInput input) {
-        this.id = input.getId() != null ? Long.valueOf(input.getId()) : null;
+        this.id = getIdOrNull(input.getId());
         this.name = input.getName();
         this.description = input.getDescription();
         this.logoUrl = input.getLogoUrl();
@@ -45,13 +48,14 @@ public class BrandDAO extends EntityDAO<Brand> {
         return new BrandDAO(input);
     }
 
+    @Override
     public Brand toGraphQL() {
         return Brand
             .newBuilder()
-            .id(String.valueOf(id))
-            .name(name)
-            .description(description)
-            .logoUrl(logoUrl)
+            .id(toGraphQLId(this.id))
+            .name(this.name)
+            .description(this.description)
+            .logoUrl(this.logoUrl)
             .build();
     }
 }
