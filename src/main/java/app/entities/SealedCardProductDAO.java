@@ -1,5 +1,9 @@
 package app.entities;
 
+import static app.utils.Utilities.getEntityGQLOrNull;
+import static app.utils.Utilities.getIdOrNull;
+import static app.utils.Utilities.toGraphQLId;
+
 import app.generated.types.SealedCardProduct;
 import app.generated.types.SealedCardProductInput;
 import jakarta.persistence.CascadeType;
@@ -17,10 +21,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import static app.utils.Utilities.getEntityGQLOrNull;
-import static app.utils.Utilities.getIdOrNull;
-import static app.utils.Utilities.toGraphQLId;
 
 @Entity
 @Table(name = "sealed_card_product")
@@ -59,11 +59,14 @@ public class SealedCardProductDAO extends EntityDAO<SealedCardProduct> {
 
     public SealedCardProductDAO(SealedCardProductInput input) {
         this.id = getIdOrNull(input.getId());
-        this.baseCollectable = BaseCollectableDAO.fromGraphQL(input.getBaseCollectable());
+        this.baseCollectable =
+        BaseCollectableDAO.fromGraphQL(input.getBaseCollectable());
         this.skuId = input.getSkuId();
     }
 
-    public static SealedCardProductDAO fromGraphQL(SealedCardProductInput input) {
+    public static SealedCardProductDAO fromGraphQL(
+        SealedCardProductInput input
+    ) {
         return new SealedCardProductDAO(input);
     }
 

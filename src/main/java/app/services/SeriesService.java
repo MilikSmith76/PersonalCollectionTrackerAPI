@@ -5,10 +5,16 @@ import app.generated.types.Series;
 import app.generated.types.SeriesFilter;
 import app.generated.types.SeriesInput;
 import app.repositories.SeriesRepository;
-
 import java.util.Optional;
 
-public class SeriesService extends EntityService<SeriesDAO, Series, SeriesRepository, SeriesInput, SeriesFilter> {
+public class SeriesService
+    extends EntityService<
+        SeriesDAO,
+        Series,
+        SeriesRepository,
+        SeriesInput,
+        SeriesFilter
+    > {
 
     public SeriesService(SeriesRepository repository) {
         super(repository);

@@ -2,14 +2,16 @@ package app.repositories;
 
 import app.entities.SeriesDAO;
 import app.generated.types.SeriesFilter;
+import java.util.List;
 import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
-public interface SeriesRepository extends JpaRepository<SeriesDAO, Long>, EntityRepository<SeriesDAO, SeriesFilter> {
+public interface SeriesRepository
+    extends
+        JpaRepository<SeriesDAO, Long>,
+        EntityRepository<SeriesDAO, SeriesFilter> {
     @Override
     default List<SeriesDAO> findByCriteria(SeriesFilter seriesFilter) {
         if (seriesFilter == null) {
@@ -23,5 +25,5 @@ public interface SeriesRepository extends JpaRepository<SeriesDAO, Long>, Entity
         }
 
         return this.findAll(Example.of(example));
-    };
+    }
 }

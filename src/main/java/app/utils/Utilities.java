@@ -12,7 +12,9 @@ public class Utilities {
         return isNumber(id) ? Long.valueOf(id) : null;
     }
 
-    public static <EntityGQL> EntityGQL getEntityGQLOrNull(EntityDAO<EntityGQL> entity) {
+    public static <EntityGQL> EntityGQL getEntityGQLOrNull(
+        EntityDAO<EntityGQL> entity
+    ) {
         return entity != null ? entity.toGraphQL() : null;
     }
 

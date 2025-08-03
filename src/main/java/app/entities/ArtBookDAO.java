@@ -1,5 +1,8 @@
 package app.entities;
 
+import static app.utils.Utilities.getIdOrNull;
+import static app.utils.Utilities.toGraphQLId;
+
 import app.generated.types.ArtBook;
 import app.generated.types.ArtBookInput;
 import jakarta.persistence.CascadeType;
@@ -17,9 +20,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import static app.utils.Utilities.getIdOrNull;
-import static app.utils.Utilities.toGraphQLId;
 
 @Entity
 @Table(name = "art_book")

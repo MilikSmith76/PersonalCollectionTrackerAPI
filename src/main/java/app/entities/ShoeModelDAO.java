@@ -1,5 +1,8 @@
 package app.entities;
 
+import static app.utils.Utilities.getIdOrNull;
+import static app.utils.Utilities.toGraphQLId;
+
 import app.generated.types.ShoeModel;
 import app.generated.types.ShoeModelInput;
 import jakarta.persistence.Column;
@@ -15,9 +18,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import static app.utils.Utilities.getIdOrNull;
-import static app.utils.Utilities.toGraphQLId;
 
 @Entity
 @Table(name = "shoe_model")

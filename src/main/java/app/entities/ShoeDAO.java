@@ -1,5 +1,8 @@
 package app.entities;
 
+import static app.utils.Utilities.getIdOrNull;
+import static app.utils.Utilities.toGraphQLId;
+
 import app.generated.types.Shoe;
 import app.generated.types.ShoeInput;
 import jakarta.persistence.CascadeType;
@@ -17,9 +20,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import static app.utils.Utilities.getIdOrNull;
-import static app.utils.Utilities.toGraphQLId;
 
 @Entity
 @Table(name = "shoe")
@@ -56,7 +56,8 @@ public class ShoeDAO extends EntityDAO<Shoe> {
 
     public ShoeDAO(ShoeInput input) {
         this.id = getIdOrNull(input.getId());
-        this.baseCollectable = BaseCollectableDAO.fromGraphQL(input.getBaseCollectable());
+        this.baseCollectable =
+        BaseCollectableDAO.fromGraphQL(input.getBaseCollectable());
         this.size = input.getSize();
         this.color = input.getColor();
         this.skuId = input.getSkuId();
