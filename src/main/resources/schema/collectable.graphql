@@ -42,6 +42,7 @@ input CollectableInput {
 
 input CollectableFilter {
     id: ID
+    baseCollectable: BaseCollectableFilter
     typeId: ID
     brandId: ID
     seriesId: ID

@@ -54,7 +54,7 @@ public class EntitySpecifications<Entity> {
 
             if (filter.getInitialPrice() != null) {
                 Predicate initialPricePredicate = criteriaBuilder.equal(
-                    baseCollectableJoin.get("initialPrice"),
+                    baseCollectableJoin.get("initial_price"),
                     filter.getInitialPrice()
                 );
 
@@ -63,7 +63,7 @@ public class EntitySpecifications<Entity> {
 
             if (filter.getMarketPrice() != null) {
                 Predicate marketPricePredicate = criteriaBuilder.equal(
-                    baseCollectableJoin.get("marketPrice"),
+                    baseCollectableJoin.get("market_price"),
                     filter.getMarketPrice()
                 );
 
@@ -116,6 +116,17 @@ public class EntitySpecifications<Entity> {
             criteriaBuilder.equal(root.get("publisher_id"), publisherId);
 
         this.specifications.add(publisherIdSpecification);
+    }
+
+    public void hasSkuId(String skuId) {
+        Specification<Entity> skuIdSpecification = (
+                root,
+                query,
+                criteriaBuilder
+            ) ->
+            criteriaBuilder.equal(root.get("sku_id"), skuId);
+
+        this.specifications.add(skuIdSpecification);
     }
 
     public void hasField(String fieldName, Object value) {

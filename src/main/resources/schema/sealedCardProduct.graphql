@@ -41,6 +41,7 @@ input SealedCardProductInput {
 
 input SealedCardProductFilter {
     id: ID
+    baseCollectable: BaseCollectableFilter
     brandId: ID
     seriesId: ID
     setId: ID

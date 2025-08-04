@@ -6,7 +6,10 @@ import app.generated.types.SeriesFilter;
 import app.generated.types.SeriesInput;
 import app.repositories.SeriesRepository;
 import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class SeriesService
     extends EntityService<
         SeriesDAO,
@@ -16,8 +19,9 @@ public class SeriesService
         SeriesFilter
     > {
 
-    public SeriesService(SeriesRepository repository) {
-        super(repository);
+    @Autowired
+    public SeriesService(SeriesRepository seriesRepository) {
+        super(seriesRepository);
     }
 
     @Override
