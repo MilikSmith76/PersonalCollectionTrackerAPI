@@ -25,15 +25,19 @@ public class CollectableService
 
     private final SeriesService seriesService;
 
+    private final CollectableTypeService typeService;
+
     @Autowired
     public CollectableService(
         CollectableRepository collectableRepository,
         BrandService brandService,
-        SeriesService seriesService
+        SeriesService seriesService,
+        CollectableTypeService typeService
     ) {
         super(collectableRepository);
         this.brandService = brandService;
         this.seriesService = seriesService;
+        this.typeService = typeService;
     }
 
     @Override
@@ -47,6 +51,7 @@ public class CollectableService
         collectableDAO.setSeries(
             this.seriesService.validateAndFindById(seriesId)
         );
+        collectableDAO.setType(this.typeService.validateAndFindById(typeId));
 
         CollectableDAO savedCollectable = this.repository.save(collectableDAO);
         return Optional.of(savedCollectable.toGraphQL());

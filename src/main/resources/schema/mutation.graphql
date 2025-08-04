@@ -30,6 +30,66 @@ type Mutation {
     deleteCard(id: ID!): Boolean!
 
     """
+    Creates a new card product type.
+    """
+    createCardProductType(input: CardProductTypeInput!): CardProductType!
+
+    """
+    Updates an existing card product type.
+    """
+    updateCardProductType(input: CardProductTypeInput!): CardProductType!
+
+    """
+    Deletes a card product type by its ID.
+    """
+    deleteCardProductType(id: ID!): Boolean!
+
+    """
+    Creates a new card rarity.
+    """
+    createCardRarity(input: CardRarityInput!): CardRarity!
+
+    """
+    Updates an existing card rarity.
+    """
+    updateCardRarity(input: CardRarityInput!): CardRarity!
+
+    """
+    Deletes a card rarity by its ID.
+    """
+    deleteCardRarity(id: ID!): Boolean!
+
+    """
+    Creates a new card set.
+    """
+    createCardSet(input: CardSetInput!): CardSet!
+
+    """
+    Updates an existing card set.
+    """
+    updateCardSet(input: CardSetInput!): CardSet!
+
+    """
+    Deletes a card set by its ID.
+    """
+    deleteCardSet(id: ID!): Boolean!
+
+    """
+    Creates a new video game console.
+    """
+    createConsole(input: ConsoleInput!): Console!
+
+    """
+    Updates an existing video game console.
+    """
+    updateConsole(input: ConsoleInput!): Console!
+
+    """
+    Deletes a video game console by its ID.
+    """
+    deleteConsole(id: ID!): Boolean!
+
+    """
     Creates a new collectable.
     """
     createCollectable(input: CollectableInput!): Collectable!
@@ -43,6 +103,21 @@ type Mutation {
     Deletes a collectable by its ID.
     """
     deleteCollectable(id: ID!): Boolean!
+
+    """
+    Creates a new Collectable Type.
+    """
+    createCollectableType(input: CollectableTypeInput!): CollectableType!
+
+    """
+    Updates an existing Collectable Type.
+    """
+    updateCollectableType(input: CollectableTypeInput!): CollectableType!
+
+    """
+    Deletes a Collectable Type by its ID.
+    """
+    deleteCollectableType(id: ID!): Boolean!
 
     """
     Creates a new sealed card product.
@@ -73,6 +148,21 @@ type Mutation {
     Deletes a shoe by its ID.
     """
     deleteShoe(id: ID!): Boolean!
+
+    """
+    Creates a new shoe model.
+    """
+    createShoeModel(input: ShoeModelInput!): ShoeModel!
+
+    """
+    Updates an existing shoe model.
+    """
+    updateShoeModel(input: ShoeModelInput!): ShoeModel!
+
+    """
+    Deletes a shoe model by its ID.
+    """
+    deleteShoeModel(id: ID!): Boolean!
 
     """
     Creates a new video game.

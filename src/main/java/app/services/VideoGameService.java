@@ -27,17 +27,21 @@ public class VideoGameService
 
     private final PublisherService publisherService;
 
+    private final ConsoleService consoleService;
+
     @Autowired
     public VideoGameService(
         VideoGameRepository videoGameRepository,
         BrandService brandService,
         SeriesService seriesService,
-        PublisherService publisherService
+        PublisherService publisherService,
+        ConsoleService consoleService
     ) {
         super(videoGameRepository);
         this.brandService = brandService;
         this.seriesService = seriesService;
         this.publisherService = publisherService;
+        this.consoleService = consoleService;
     }
 
     @Override
@@ -54,6 +58,9 @@ public class VideoGameService
         );
         videoGameDAO.setPublisher(
             this.publisherService.validateAndFindById(publisherId)
+        );
+        videoGameDAO.setConsole(
+            this.consoleService.validateAndFindById(consoleId)
         );
 
         VideoGameDAO savedVideoGame = this.repository.save(videoGameDAO);

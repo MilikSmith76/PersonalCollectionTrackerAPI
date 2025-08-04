@@ -154,6 +154,20 @@ public class EntitySpecifications<Entity> {
         this.specifications.add(fieldLikeSpecification);
     }
 
+    public void hasNameLike(String name) {
+        Specification<Entity> nameLikeSpecification = (
+                root,
+                query,
+                criteriaBuilder
+            ) ->
+            criteriaBuilder.like(
+                criteriaBuilder.lower(root.get("name")),
+                likePattern(name)
+            );
+
+        this.specifications.add(nameLikeSpecification);
+    }
+
     public Specification<Entity> getSpecifications() {
         return Specification.allOf(this.specifications);
     }

@@ -25,15 +25,23 @@ public class SealedCardProductService
 
     private final SeriesService seriesService;
 
+    private final CardSetService cardSetService;
+
+    private final CardProductTypeService typeService;
+
     @Autowired
     public SealedCardProductService(
         SealedCardProductRepository sealedCardProductRepository,
         BrandService brandService,
-        SeriesService seriesService
+        SeriesService seriesService,
+        CardSetService cardSetService,
+        CardProductTypeService typeService
     ) {
         super(sealedCardProductRepository);
         this.brandService = brandService;
         this.seriesService = seriesService;
+        this.cardSetService = cardSetService;
+        this.typeService = typeService;
     }
 
     @Override
@@ -50,6 +58,12 @@ public class SealedCardProductService
         );
         sealedCardProductDAO.setSeries(
             this.seriesService.validateAndFindById(seriesId)
+        );
+        sealedCardProductDAO.setSet(
+            this.cardSetService.validateAndFindById(setId)
+        );
+        sealedCardProductDAO.setType(
+            this.typeService.validateAndFindById(typeId)
         );
 
         SealedCardProductDAO savedSealedCardProduct =

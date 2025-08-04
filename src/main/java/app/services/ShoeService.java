@@ -23,13 +23,17 @@ public class ShoeService
 
     private final BrandService brandService;
 
+    private final ShoeModelService modelService;
+
     @Autowired
     public ShoeService(
         ShoeRepository shoeRepository,
-        BrandService brandService
+        BrandService brandService,
+        ShoeModelService modelService
     ) {
         super(shoeRepository);
         this.brandService = brandService;
+        this.modelService = modelService;
     }
 
     @Override
@@ -39,6 +43,7 @@ public class ShoeService
 
         ShoeDAO shoeDAO = ShoeDAO.fromGraphQL(input);
         shoeDAO.setBrand(this.brandService.validateAndFindById(brandId));
+        shoeDAO.setModel(this.modelService.validateAndFindById(modelId));
 
         ShoeDAO savedShoe = this.repository.save(shoeDAO);
         return Optional.of(savedShoe.toGraphQL());

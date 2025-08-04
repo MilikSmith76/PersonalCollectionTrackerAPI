@@ -20,6 +20,46 @@ type Query {
     card(id: ID!): Card
 
     """
+    Fetches a list of card product types filtered by an input.
+    """
+    cardProductTypes(filter: CardProductTypeFilter): [CardProductType!]!
+
+    """
+    Fetches a specific card product type by its ID.
+    """
+    cardProductType(id: ID!): CardProductType
+
+    """
+    Fetches a list of card rarities filtered by an input.
+    """
+    cardRarities(filter: CardRarityFilter): [CardRarity!]!
+
+    """
+    Fetches a specific card rarity by its ID.
+    """
+    cardRarity(id: ID!): CardRarity
+
+    """
+    Fetches a list of card sets filtered by an input.
+    """
+    cardSets(filter: CardSetFilter): [CardSet!]!
+
+    """
+    Fetches a specific card set by its ID.
+    """
+    cardSet(id: ID!): CardSet
+
+    """
+    Fetches a list of video game consoles filtered by an input.
+    """
+    consoles(filter: ConsoleFilter): [Console!]!
+
+    """
+    Fetches a specific video game console by its ID.
+    """
+    console(id: ID!): Console
+
+    """
     Fetches a list of collectables filtered by an input.
     """
     collectables(filter: CollectableFilter): [Collectable!]!
@@ -28,6 +68,16 @@ type Query {
     Fetches a specific collectable by its ID.
     """
     collectable(id: ID!): Collectable
+
+    """
+    Fetches a list of types of collectables filtered by an input.
+    """
+    collectableTypes(filter: CollectableTypeFilter): [CollectableType!]!
+
+    """
+    Fetches a specific type of collectable by its ID.
+    """
+    collectableType(id: ID!): CollectableType
 
     """
     Fetches a list of sealed card products filtered by an input.
@@ -48,6 +98,16 @@ type Query {
     Fetches a specific shoe by its ID.
     """
     shoe(id: ID!): Shoe
+
+    """
+    Fetches a list of shoe models filtered by an input.
+    """
+    shoeModels(filter: ShoeModelFilter): [ShoeModel!]!
+
+    """
+    Fetches a specific shoe model by its ID.
+    """
+    shoeModel(id: ID!): ShoeModel
 
     """
     Fetches a list of video games filtered by an input.

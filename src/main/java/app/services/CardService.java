@@ -25,17 +25,23 @@ public class CardService
 
     private final SeriesService seriesService;
 
-    // TODO: Add CardSetService and CardRarityService when implemented
+    private final CardSetService cardSetService;
+
+    private final CardRarityService rarityService;
 
     @Autowired
     public CardService(
         CardRepository cardRepository,
         BrandService brandService,
-        SeriesService seriesService
+        SeriesService seriesService,
+        CardSetService cardSetService,
+        CardRarityService rarityService
     ) {
         super(cardRepository);
         this.brandService = brandService;
         this.seriesService = seriesService;
+        this.cardSetService = cardSetService;
+        this.rarityService = rarityService;
     }
 
     @Override
@@ -48,6 +54,8 @@ public class CardService
         CardDAO cardDAO = CardDAO.fromGraphQL(input);
         cardDAO.setBrand(this.brandService.validateAndFindById(brandId));
         cardDAO.setSeries(this.seriesService.validateAndFindById(seriesId));
+        cardDAO.setSet(this.cardSetService.validateAndFindById(setId));
+        cardDAO.setRarity(this.rarityService.validateAndFindById(rarityId));
 
         CardDAO savedCard = this.repository.save(cardDAO);
         return Optional.of(savedCard.toGraphQL());
