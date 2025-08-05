@@ -26,7 +26,7 @@ A Spring Boot GraphQL API for managing records of collectable inventory.
 
 1. Clone the repository
 
-2. Copy content of [application.properties.example](`src/main/resources/application.properties.example`) to `src/main/resources/application.properties`.
+2. Copy content of [application.properties.example](src/main/resources/application.properties.example) to `src/main/resources/application.properties`.
 
 3. Configure your database credentials in `application.properties`.
 
@@ -64,7 +64,7 @@ A connection to the database is required for the application to function properl
 ### Database Schema
 
 The database schema is managed by Flyway migrations.
-The schema is defined by migration files in the [migration](`src/main/resources/db/migration`) directory.
+The schema is defined by migration files in the [migration](src/main/resources/db/migration) directory.
 
 ### Running Migrations
 
@@ -80,14 +80,14 @@ If an existing database is not going to be used, a docker database is provided b
 
 ### GraphQL Schema
 
-The GraphQL schemas can be found in the [schema](`src/main/resources/schema`) directory.
+The GraphQL schemas can be found in the [schema](src/main/resources/schema) directory.
 These schemas include input types, queries, and mutations.
 
-- The schemas for queries can be found in [query.graphql](`src/main/resources/schema/query.graphql`).
+- The schemas for queries can be found in [query.graphql](src/main/resources/schema/query.graphql).
 
-- The schemas for mutations can be found in [mutation.graphql](`src/main/resources/schema/mutation.graphql`).
+- The schemas for mutations can be found in [mutation.graphql](src/main/resources/schema/mutation.graphql).
 
 ### GraphQL Request Handling
 
-GraphQL requests are handled by the respective Data Fetcher in the [dataFetchers](`src/main/java/app/dataFetchers`) directory.
+GraphQL requests are handled by the respective Data Fetcher in the [dataFetchers](src/main/java/app/dataFetchers) directory.
 
