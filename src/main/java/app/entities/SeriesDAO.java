@@ -32,6 +32,7 @@ public class SeriesDAO extends EntityDAO<Series> {
     private String name;
 
     public SeriesDAO(SeriesInput input) {
+        super();
         this.id = getIdOrNull(input.getId());
         this.name = input.getName();
     }
@@ -46,6 +47,10 @@ public class SeriesDAO extends EntityDAO<Series> {
             .newBuilder()
             .id(toGraphQLId(this.id))
             .name(this.name)
+            .deleted(this.getDeletedOrDefault())
+            .createdAt(this.getCreatedAtDate())
+            .updatedAt(this.getUpdatedAtDate())
+            .deletedAt(this.getDeletedAtDate())
             .build();
     }
 }

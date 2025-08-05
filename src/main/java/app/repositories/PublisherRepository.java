@@ -2,9 +2,8 @@ package app.repositories;
 
 import app.entities.PublisherDAO;
 import app.generated.types.PublisherFilter;
+import app.utils.EntityExample;
 import java.util.List;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -19,22 +18,22 @@ public interface PublisherRepository
             return this.findAll();
         }
 
-        PublisherDAO example = new PublisherDAO();
+        EntityExample<PublisherDAO> publisherExample = new EntityExample<>(
+            PublisherDAO.class
+        );
 
         if (filter.getName() != null) {
-            example.setName(filter.getName());
+            publisherExample.setName(filter.getName());
         }
 
         if (filter.getDescription() != null) {
-            example.setDescription(filter.getDescription());
+            publisherExample.setDescription(filter.getDescription());
         }
 
-        ExampleMatcher matcher = ExampleMatcher
-            .matching()
-            .withIgnoreNullValues()
-            .withIgnoreCase()
-            .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
-        Example<PublisherDAO> exampleQuery = Example.of(example, matcher);
-        return this.findAll(exampleQuery);
+        if (filter.getDeleted() != null) {
+            publisherExample.setDeleted(filter.getDeleted());
+        }
+
+        return this.findAll(publisherExample.getExampleEntity());
     }
 }

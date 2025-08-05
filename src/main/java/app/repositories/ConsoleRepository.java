@@ -34,6 +34,10 @@ public interface ConsoleRepository
             consoleSpecifications.hasBrandId(brandId);
         }
 
+        if (filter.getDeleted() != null) {
+            consoleSpecifications.hasDeleted(filter.getDeleted());
+        }
+
         return this.findAll(consoleSpecifications.getSpecifications());
     }
 }

@@ -32,6 +32,7 @@ public class CardProductTypeDAO extends EntityDAO<CardProductType> {
     private String name;
 
     public CardProductTypeDAO(CardProductTypeInput input) {
+        super();
         this.id = getIdOrNull(input.getId());
         this.name = input.getName();
     }
@@ -46,6 +47,10 @@ public class CardProductTypeDAO extends EntityDAO<CardProductType> {
             .newBuilder()
             .id(toGraphQLId(this.id))
             .name(this.name)
+            .deleted(this.getDeletedOrDefault())
+            .createdAt(this.getCreatedAtDate())
+            .updatedAt(this.getUpdatedAtDate())
+            .deletedAt(this.getDeletedAtDate())
             .build();
     }
 }

@@ -5,6 +5,10 @@ type ShoeModel {
     id: ID!
     name: String!
     brand: Brand!
+    deleted: Boolean!
+    createdAt: String!
+    updatedAt: String!
+    deletedAt: String
 }
 
 input ShoeModelInput {
@@ -17,6 +21,7 @@ input ShoeModelFilter {
     id: ID
     name: String
     brandId: ID
+    deleted: Boolean
 }
 
 """
@@ -30,6 +35,10 @@ type Shoe {
     size: String!
     color: String!
     skuId: String!
+    deleted: Boolean!
+    createdAt: String!
+    updatedAt: String!
+    deletedAt: String
 }
 
 input ShoeInput {
@@ -50,4 +59,5 @@ input ShoeFilter {
     size: String
     color: String
     skuId: String
+    deleted: Boolean
 }

@@ -38,6 +38,7 @@ public class PublisherDAO extends EntityDAO<Publisher> {
     private String logoUrl;
 
     public PublisherDAO(PublisherInput input) {
+        super();
         this.id = getIdOrNull(input.getId());
         this.name = input.getName();
         this.description = input.getDescription();
@@ -56,6 +57,10 @@ public class PublisherDAO extends EntityDAO<Publisher> {
             .name(this.name)
             .description(this.description)
             .logoUrl(this.logoUrl)
+            .deleted(this.getDeletedOrDefault())
+            .createdAt(this.getCreatedAtDate())
+            .updatedAt(this.getUpdatedAtDate())
+            .deletedAt(this.getDeletedAtDate())
             .build();
     }
 }

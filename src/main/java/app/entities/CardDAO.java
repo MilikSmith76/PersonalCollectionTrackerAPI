@@ -58,6 +58,7 @@ public class CardDAO extends EntityDAO<Card> {
     private String cardNumber;
 
     public CardDAO(CardInput input) {
+        super();
         this.id = getIdOrNull(input.getId());
         this.baseCollectable =
         BaseCollectableDAO.fromGraphQL(input.getBaseCollectable());
@@ -79,6 +80,10 @@ public class CardDAO extends EntityDAO<Card> {
             .set(this.set.toGraphQL())
             .rarity(this.rarity.toGraphQL())
             .cardNumber(this.cardNumber)
+            .deleted(this.getDeletedOrDefault())
+            .createdAt(this.getCreatedAtDate())
+            .updatedAt(this.getUpdatedAtDate())
+            .deletedAt(this.getDeletedAtDate())
             .build();
     }
 }

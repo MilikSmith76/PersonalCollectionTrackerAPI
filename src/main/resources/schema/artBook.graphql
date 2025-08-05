@@ -7,6 +7,10 @@ type ArtBook {
     brand: Brand!
     publisher: Publisher!
     isbn: String
+    deleted: Boolean!
+    createdAt: String!
+    updatedAt: String!
+    deletedAt: String
 }
 
 input ArtBookInput {
@@ -23,4 +27,5 @@ input ArtBookFilter {
     brandId: ID
     publisherId: ID
     isbn: String
+    deleted: Boolean
 }

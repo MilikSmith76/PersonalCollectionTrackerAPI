@@ -34,6 +34,10 @@ public interface CardRarityRepository
             cardRaritySpecifications.hasBrandId(brandId);
         }
 
+        if (filter.getDeleted() != null) {
+            cardRaritySpecifications.hasDeleted(filter.getDeleted());
+        }
+
         return this.findAll(cardRaritySpecifications.getSpecifications());
     }
 }

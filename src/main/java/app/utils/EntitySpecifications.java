@@ -129,6 +129,17 @@ public class EntitySpecifications<Entity> {
         this.specifications.add(skuIdSpecification);
     }
 
+    public void hasDeleted(Boolean deleted) {
+        Specification<Entity> deletedSpecification = (
+                root,
+                query,
+                criteriaBuilder
+            ) ->
+            criteriaBuilder.equal(root.get("deleted"), deleted);
+
+        this.specifications.add(deletedSpecification);
+    }
+
     public void hasField(String fieldName, Object value) {
         Specification<Entity> fieldSpecification = (
                 root,

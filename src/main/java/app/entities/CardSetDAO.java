@@ -44,6 +44,7 @@ public class CardSetDAO extends EntityDAO<CardSet> {
     private SeriesDAO series;
 
     public CardSetDAO(CardSetInput input) {
+        super();
         this.id = getIdOrNull(input.getId());
         this.name = input.getName();
     }
@@ -60,6 +61,10 @@ public class CardSetDAO extends EntityDAO<CardSet> {
             .name(this.name)
             .brand(this.brand.toGraphQL())
             .series(getEntityGQLOrNull(this.series))
+            .deleted(this.getDeletedOrDefault())
+            .createdAt(this.getCreatedAtDate())
+            .updatedAt(this.getUpdatedAtDate())
+            .deletedAt(this.getDeletedAtDate())
             .build();
     }
 }

@@ -39,6 +39,7 @@ public class ConsoleDAO extends EntityDAO<Console> {
     private BrandDAO brand;
 
     public ConsoleDAO(ConsoleInput input) {
+        super();
         this.id = getIdOrNull(input.getId());
         this.name = input.getName();
     }
@@ -54,6 +55,10 @@ public class ConsoleDAO extends EntityDAO<Console> {
             .id(toGraphQLId(this.id))
             .name(this.name)
             .brand(this.brand.toGraphQL())
+            .deleted(this.getDeletedOrDefault())
+            .createdAt(this.getCreatedAtDate())
+            .updatedAt(this.getUpdatedAtDate())
+            .deletedAt(this.getDeletedAtDate())
             .build();
     }
 }

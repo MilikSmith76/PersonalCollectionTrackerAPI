@@ -6,6 +6,10 @@ type Brand {
     name: String!
     description: String
     logoUrl: String!
+    deleted: Boolean!
+    createdAt: String!
+    updatedAt: String!
+    deletedAt: String
 }
 
 input BrandInput {
@@ -20,4 +24,5 @@ input BrandFilter {
     name: String
     description: String
     logoUrl: String
+    deleted: Boolean
 }

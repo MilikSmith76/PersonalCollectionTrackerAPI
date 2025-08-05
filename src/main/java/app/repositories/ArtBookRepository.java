@@ -45,6 +45,10 @@ public interface ArtBookRepository
             artBookSpecifications.hasFieldLike("isbn", filter.getIsbn());
         }
 
+        if (filter.getDeleted() != null) {
+            artBookSpecifications.hasDeleted(filter.getDeleted());
+        }
+
         return this.findAll(artBookSpecifications.getSpecifications());
     }
 }

@@ -49,6 +49,7 @@ public class ArtBookDAO extends EntityDAO<ArtBook> {
     private String isbn;
 
     public ArtBookDAO(ArtBookInput input) {
+        super();
         this.id = getIdOrNull(input.getId());
         this.baseCollectable =
         new BaseCollectableDAO(input.getBaseCollectable());
@@ -68,6 +69,10 @@ public class ArtBookDAO extends EntityDAO<ArtBook> {
             .brand(this.brand.toGraphQL())
             .publisher(this.publisher.toGraphQL())
             .isbn(this.isbn)
+            .deleted(this.getDeletedOrDefault())
+            .createdAt(this.getCreatedAtDate())
+            .updatedAt(this.getUpdatedAtDate())
+            .deletedAt(this.getDeletedAtDate())
             .build();
     }
 }

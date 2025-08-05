@@ -9,6 +9,10 @@ type BaseCollectable {
     initialPrice: String!
     marketPrice: String!
     quantity: Int!
+    deleted: Boolean!
+    createdAt: String!
+    updatedAt: String!
+    deletedAt: String
 }
 
 input BaseCollectableInput {
@@ -29,4 +33,5 @@ input BaseCollectableFilter {
     initialPrice: String
     marketPrice: String
     quantity: Int
+    deleted: Boolean
 }

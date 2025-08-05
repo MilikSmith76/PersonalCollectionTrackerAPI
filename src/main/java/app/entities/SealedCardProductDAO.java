@@ -58,6 +58,7 @@ public class SealedCardProductDAO extends EntityDAO<SealedCardProduct> {
     private String skuId;
 
     public SealedCardProductDAO(SealedCardProductInput input) {
+        super();
         this.id = getIdOrNull(input.getId());
         this.baseCollectable =
         BaseCollectableDAO.fromGraphQL(input.getBaseCollectable());
@@ -81,6 +82,10 @@ public class SealedCardProductDAO extends EntityDAO<SealedCardProduct> {
             .set(this.set.toGraphQL())
             .type(this.type.toGraphQL())
             .skuId(this.skuId)
+            .deleted(this.getDeletedOrDefault())
+            .createdAt(this.getCreatedAtDate())
+            .updatedAt(this.getUpdatedAtDate())
+            .deletedAt(this.getDeletedAtDate())
             .build();
     }
 }

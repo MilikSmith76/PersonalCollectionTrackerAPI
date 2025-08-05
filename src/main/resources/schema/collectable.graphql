@@ -5,6 +5,10 @@ excludes: ArtBooks, Cards, Sealed Cards, Shoes, and Video Games.
 type CollectableType {
     id: ID!
     name: String!
+    deleted: Boolean!
+    createdAt: String!
+    updatedAt: String!
+    deletedAt: String
 }
 
 input CollectableTypeInput {
@@ -14,9 +18,8 @@ input CollectableTypeInput {
 
 input CollectableTypeFilter {
     id: ID
-    name: String!
-    description: String
-    imageUrl: String
+    name: String
+    deleted: Boolean
 }
 
 """
@@ -29,6 +32,10 @@ type Collectable {
     brand: Brand!
     series: Series
     skuId: String!
+    deleted: Boolean!
+    createdAt: String!
+    updatedAt: String!
+    deletedAt: String
 }
 
 input CollectableInput {
@@ -47,4 +54,5 @@ input CollectableFilter {
     brandId: ID
     seriesId: ID
     skuId: String
+    deleted: Boolean
 }

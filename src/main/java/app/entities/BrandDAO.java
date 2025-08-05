@@ -38,6 +38,7 @@ public class BrandDAO extends EntityDAO<Brand> {
     private String logoUrl;
 
     public BrandDAO(BrandInput input) {
+        super();
         this.id = getIdOrNull(input.getId());
         this.name = input.getName();
         this.description = input.getDescription();
@@ -56,6 +57,10 @@ public class BrandDAO extends EntityDAO<Brand> {
             .name(this.name)
             .description(this.description)
             .logoUrl(this.logoUrl)
+            .deleted(this.getDeletedOrDefault())
+            .createdAt(this.getCreatedAtDate())
+            .updatedAt(this.getUpdatedAtDate())
+            .deletedAt(this.getDeletedAtDate())
             .build();
     }
 }

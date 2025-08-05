@@ -4,6 +4,10 @@ Represents an intellectual property series
 type Series {
     id: ID!
     name: String!
+    deleted: Boolean!
+    createdAt: String!
+    updatedAt: String!
+    deletedAt: String
 }
 
 input SeriesInput {
@@ -13,5 +17,6 @@ input SeriesInput {
 
 input SeriesFilter {
     id: ID
-    name: String!
+    name: String
+    deleted: Boolean
 }

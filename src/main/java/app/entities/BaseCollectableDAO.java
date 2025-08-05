@@ -47,6 +47,7 @@ public class BaseCollectableDAO extends EntityDAO<BaseCollectable> {
     private Integer quantity;
 
     public BaseCollectableDAO(BaseCollectableInput input) {
+        super();
         this.id = getIdOrNull(input.getId());
         this.name = input.getName();
         this.description = input.getDescription();
@@ -71,6 +72,10 @@ public class BaseCollectableDAO extends EntityDAO<BaseCollectable> {
             .initialPrice(this.initialPrice)
             .marketPrice(this.marketPrice)
             .quantity(this.quantity)
+            .deleted(this.getDeletedOrDefault())
+            .createdAt(this.getCreatedAtDate())
+            .updatedAt(this.getUpdatedAtDate())
+            .deletedAt(this.getDeletedAtDate())
             .build();
     }
 }

@@ -6,6 +6,10 @@ type CardSet {
     name: String!
     brand: Brand!
     series: Series!
+    deleted: Boolean!
+    createdAt: String!
+    updatedAt: String!
+    deletedAt: String
 }
 
 input CardSetInput {
@@ -20,6 +24,7 @@ input CardSetFilter {
     name: String
     brandId: ID
     seriesId: ID
+    deleted: Boolean
 }
 
 """
@@ -29,6 +34,10 @@ type CardRarity {
     id: ID!
     name: String!
     brand: Brand!
+    deleted: Boolean!
+    createdAt: String!
+    updatedAt: String!
+    deletedAt: String
 }
 
 input CardRarityInput {
@@ -41,6 +50,7 @@ input CardRarityFilter {
     id: ID
     name: String
     brandId: ID
+    deleted: Boolean
 }
 
 """
@@ -54,6 +64,10 @@ type Card {
     rarity: CardRarity!
     set: CardSet!
     cardNumber: String!
+    deleted: Boolean!
+    createdAt: String!
+    updatedAt: String!
+    deletedAt: String
 }
 
 input CardInput {
@@ -74,4 +88,5 @@ input CardFilter {
     rarityId: ID
     setId: ID
     cardNumber: String
+    deleted: Boolean
 }

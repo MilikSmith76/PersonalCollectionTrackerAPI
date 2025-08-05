@@ -55,6 +55,10 @@ public interface VideoGameRepository
             videoGameSpecifications.hasSkuId(filter.getSkuId());
         }
 
+        if (filter.getDeleted() != null) {
+            videoGameSpecifications.hasDeleted(filter.getDeleted());
+        }
+
         return this.findAll(videoGameSpecifications.getSpecifications());
     }
 }

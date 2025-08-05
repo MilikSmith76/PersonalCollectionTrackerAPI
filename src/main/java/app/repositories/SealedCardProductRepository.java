@@ -55,6 +55,10 @@ public interface SealedCardProductRepository
             specifications.hasSkuId(filter.getSkuId());
         }
 
+        if (filter.getDeleted() != null) {
+            specifications.hasDeleted(filter.getDeleted());
+        }
+
         return this.findAll(specifications.getSpecifications());
     }
 }

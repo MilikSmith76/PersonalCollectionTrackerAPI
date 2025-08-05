@@ -39,6 +39,10 @@ public interface CardSetRepository
             cardSetSpecifications.hasSeriesId(seriesId);
         }
 
+        if (filter.getDeleted() != null) {
+            cardSetSpecifications.hasDeleted(filter.getDeleted());
+        }
+
         return this.findAll(cardSetSpecifications.getSpecifications());
     }
 }

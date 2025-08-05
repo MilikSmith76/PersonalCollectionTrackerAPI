@@ -4,6 +4,10 @@ Represents the type of a card product, such as a booster box or pack.
 type CardProductType {
     id: ID!
     name: String!
+    deleted: Boolean!
+    createdAt: String!
+    updatedAt: String!
+    deletedAt: String
 }
 
 input CardProductTypeInput {
@@ -13,7 +17,8 @@ input CardProductTypeInput {
 
 input CardProductTypeFilter {
     id: ID
-    name: String!
+    name: String
+    deleted: Boolean
 }
 
 """
@@ -27,6 +32,10 @@ type SealedCardProduct {
     set: CardSet!
     type: CardProductType!
     skuId: String!
+    deleted: Boolean!
+    createdAt: String!
+    updatedAt: String!
+    deletedAt: String
 }
 
 input SealedCardProductInput {
@@ -47,4 +56,5 @@ input SealedCardProductFilter {
     setId: ID
     typeId: ID
     skuId: String
+    deleted: Boolean
 }

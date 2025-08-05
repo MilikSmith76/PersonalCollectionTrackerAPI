@@ -58,6 +58,7 @@ public class VideoGameDAO extends EntityDAO<VideoGame> {
     private String skuId;
 
     public VideoGameDAO(VideoGameInput input) {
+        super();
         this.id = getIdOrNull(input.getId());
         this.baseCollectable =
         BaseCollectableDAO.fromGraphQL(input.getBaseCollectable());
@@ -79,6 +80,10 @@ public class VideoGameDAO extends EntityDAO<VideoGame> {
             .publisher(this.publisher.toGraphQL())
             .console(this.console.toGraphQL())
             .skuId(this.skuId)
+            .deleted(this.getDeletedOrDefault())
+            .createdAt(this.getCreatedAtDate())
+            .updatedAt(this.getUpdatedAtDate())
+            .deletedAt(this.getDeletedAtDate())
             .build();
     }
 }

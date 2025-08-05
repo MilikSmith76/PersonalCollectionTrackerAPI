@@ -2,9 +2,8 @@ package app.repositories;
 
 import app.entities.BrandDAO;
 import app.generated.types.BrandFilter;
+import app.utils.EntityExample;
 import java.util.List;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -18,22 +17,22 @@ public interface BrandRepository
             return this.findAll();
         }
 
-        BrandDAO example = new BrandDAO();
+        EntityExample<BrandDAO> brandExample = new EntityExample<>(
+            BrandDAO.class
+        );
 
         if (filter.getName() != null) {
-            example.setName(filter.getName());
+            brandExample.setName(filter.getName());
         }
 
         if (filter.getDescription() != null) {
-            example.setDescription(filter.getDescription());
+            brandExample.setDescription(filter.getDescription());
         }
 
-        ExampleMatcher matcher = ExampleMatcher
-            .matching()
-            .withIgnoreNullValues()
-            .withIgnoreCase()
-            .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
-        Example<BrandDAO> exampleQuery = Example.of(example, matcher);
-        return this.findAll(exampleQuery);
+        if (filter.getDeleted() != null) {
+            brandExample.setDeleted(filter.getDeleted());
+        }
+
+        return this.findAll(brandExample.getExampleEntity());
     }
 }

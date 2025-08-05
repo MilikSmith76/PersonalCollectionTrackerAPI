@@ -4,6 +4,7 @@ import static app.utils.Utilities.fromGraphQLId;
 
 import app.entities.EntityDAO;
 import app.repositories.EntityRepository;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -85,9 +86,11 @@ public abstract class EntityService<
     public Boolean delete(String id) {
         Long parsedId = fromGraphQLId(id);
 
-        this.validateId(parsedId);
+        Entity entity = this.validateAndFindById(parsedId);
+        entity.setDeleted(true);
+        entity.setDeletedAt(new Timestamp(System.currentTimeMillis()));
 
-        this.repository.deleteById(parsedId);
+        this.repository.save(entity);
         return true;
     }
 }

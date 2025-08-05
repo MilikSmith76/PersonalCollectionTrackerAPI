@@ -51,6 +51,10 @@ public interface ShoeRepository
             shoeSpecifications.hasSkuId(filter.getSkuId());
         }
 
+        if (filter.getDeleted() != null) {
+            shoeSpecifications.hasDeleted(filter.getDeleted());
+        }
+
         return this.findAll(shoeSpecifications.getSpecifications());
     }
 }

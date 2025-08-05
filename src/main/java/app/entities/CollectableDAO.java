@@ -54,6 +54,7 @@ public class CollectableDAO extends EntityDAO<Collectable> {
     private String skuId;
 
     public CollectableDAO(CollectableInput input) {
+        super();
         this.id = getIdOrNull(input.getId());
         this.skuId = input.getSkuId();
     }
@@ -72,6 +73,10 @@ public class CollectableDAO extends EntityDAO<Collectable> {
             .brand(this.brand.toGraphQL())
             .series(getEntityGQLOrNull(this.series))
             .skuId(this.skuId)
+            .deleted(this.getDeletedOrDefault())
+            .createdAt(this.getCreatedAtDate())
+            .updatedAt(this.getUpdatedAtDate())
+            .deletedAt(this.getDeletedAtDate())
             .build();
     }
 }

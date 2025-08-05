@@ -6,6 +6,10 @@ type Publisher {
     name: String!
     description: String
     logoUrl: String!
+    deleted: Boolean!
+    createdAt: String!
+    updatedAt: String!
+    deletedAt: String
 }
 
 input PublisherInput {
@@ -20,4 +24,5 @@ input PublisherFilter {
     name: String
     description: String
     logoUrl: String
+    deleted: Boolean
 }

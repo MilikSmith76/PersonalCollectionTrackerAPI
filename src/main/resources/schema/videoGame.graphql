@@ -5,6 +5,10 @@ type Console {
     id: ID!
     name: String!
     brand: Brand!
+    deleted: Boolean!
+    createdAt: String!
+    updatedAt: String!
+    deletedAt: String
 }
 
 input ConsoleInput {
@@ -17,6 +21,7 @@ input ConsoleFilter {
     id: ID
     name: String
     brandId: ID
+    deleted: Boolean
 }
 
 """
@@ -30,6 +35,10 @@ type VideoGame {
     publisher: Publisher!
     console: Console!
     skuId: String!
+    deleted: Boolean!
+    createdAt: String!
+    updatedAt: String!
+    deletedAt: String
 }
 
 input VideoGameInput {
@@ -50,4 +59,5 @@ input VideoGameFilter {
     publisherId: ID
     consoleId: ID
     skuId: String
+    deleted: Boolean
 }

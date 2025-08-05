@@ -34,6 +34,10 @@ public interface ShoeModelRepository
             shoeModelSpecifications.hasBrandId(brandId);
         }
 
-        return this.findAll();
+        if (filter.getDeleted() != null) {
+            shoeModelSpecifications.hasDeleted(filter.getDeleted());
+        }
+
+        return this.findAll(shoeModelSpecifications.getSpecifications());
     }
 }

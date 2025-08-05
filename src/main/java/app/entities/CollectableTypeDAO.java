@@ -32,6 +32,7 @@ public class CollectableTypeDAO extends EntityDAO<CollectableType> {
     private String name;
 
     public CollectableTypeDAO(CollectableTypeInput input) {
+        super();
         this.id = getIdOrNull(input.getId());
         this.name = input.getName();
     }
@@ -46,6 +47,10 @@ public class CollectableTypeDAO extends EntityDAO<CollectableType> {
             .newBuilder()
             .id(toGraphQLId(this.id))
             .name(this.name)
+            .deleted(this.getDeletedOrDefault())
+            .createdAt(this.getCreatedAtDate())
+            .updatedAt(this.getUpdatedAtDate())
+            .deletedAt(this.getDeletedAtDate())
             .build();
     }
 }

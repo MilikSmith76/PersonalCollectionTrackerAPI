@@ -55,6 +55,7 @@ public class ShoeDAO extends EntityDAO<Shoe> {
     private String skuId;
 
     public ShoeDAO(ShoeInput input) {
+        super();
         this.id = getIdOrNull(input.getId());
         this.baseCollectable =
         BaseCollectableDAO.fromGraphQL(input.getBaseCollectable());
@@ -78,6 +79,10 @@ public class ShoeDAO extends EntityDAO<Shoe> {
             .size(this.size)
             .color(this.color)
             .skuId(this.skuId)
+            .deleted(this.getDeletedOrDefault())
+            .createdAt(this.getCreatedAtDate())
+            .updatedAt(this.getUpdatedAtDate())
+            .deletedAt(this.getDeletedAtDate())
             .build();
     }
 }

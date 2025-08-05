@@ -2,8 +2,8 @@ package app.repositories;
 
 import app.entities.SeriesDAO;
 import app.generated.types.SeriesFilter;
+import app.utils.EntityExample;
 import java.util.List;
-import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -18,12 +18,18 @@ public interface SeriesRepository
             return this.findAll();
         }
 
-        SeriesDAO example = new SeriesDAO();
+        EntityExample<SeriesDAO> seriesExample = new EntityExample<>(
+            SeriesDAO.class
+        );
 
         if (seriesFilter.getName() != null) {
-            example.setName(seriesFilter.getName());
+            seriesExample.setName(seriesFilter.getName());
         }
 
-        return this.findAll(Example.of(example));
+        if (seriesFilter.getDeleted() != null) {
+            seriesExample.setDeleted(seriesFilter.getDeleted());
+        }
+
+        return this.findAll(seriesExample.getExampleEntity());
     }
 }

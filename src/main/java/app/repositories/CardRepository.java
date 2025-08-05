@@ -56,6 +56,10 @@ public interface CardRepository
             );
         }
 
+        if (filter.getDeleted() != null) {
+            cardSpecifications.hasDeleted(filter.getDeleted());
+        }
+
         return this.findAll(cardSpecifications.getSpecifications());
     }
 }

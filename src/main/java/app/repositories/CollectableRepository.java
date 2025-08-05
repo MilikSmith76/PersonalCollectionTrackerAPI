@@ -50,6 +50,10 @@ public interface CollectableRepository
             collectableSpecifications.hasSkuId(filter.getSkuId());
         }
 
+        if (filter.getDeleted() != null) {
+            collectableSpecifications.hasDeleted(filter.getDeleted());
+        }
+
         return this.findAll(collectableSpecifications.getSpecifications());
     }
 }

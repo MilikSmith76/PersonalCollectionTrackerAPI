@@ -39,6 +39,7 @@ public class CardRarityDAO extends EntityDAO<CardRarity> {
     private BrandDAO brand;
 
     public CardRarityDAO(CardRarityInput input) {
+        super();
         this.id = getIdOrNull(input.getId());
         this.name = input.getName();
     }
@@ -54,6 +55,10 @@ public class CardRarityDAO extends EntityDAO<CardRarity> {
             .id(toGraphQLId(this.id))
             .name(this.name)
             .brand(this.brand.toGraphQL())
+            .deleted(this.getDeletedOrDefault())
+            .createdAt(this.getCreatedAtDate())
+            .updatedAt(this.getUpdatedAtDate())
+            .deletedAt(this.getDeletedAtDate())
             .build();
     }
 }
