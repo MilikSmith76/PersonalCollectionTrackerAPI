@@ -4,7 +4,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
-
 import java.sql.Timestamp;
 import java.util.Date;
 import lombok.Getter;
@@ -27,11 +26,15 @@ public abstract class EntityDAO<EntityGQL> {
     }
 
     String getCreatedAtDate() {
-        return this.createdAt != null ? this.createdAt.toString() : this.getCurrentTimestamp();
+        return this.createdAt != null
+            ? this.createdAt.toString()
+            : this.getCurrentTimestamp();
     }
 
     String getUpdatedAtDate() {
-        return this.updatedAt != null ? this.updatedAt.toString() : this.getCurrentTimestamp();
+        return this.updatedAt != null
+            ? this.updatedAt.toString()
+            : this.getCurrentTimestamp();
     }
 
     Boolean getDeletedOrDefault() {

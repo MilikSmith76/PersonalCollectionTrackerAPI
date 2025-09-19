@@ -50,6 +50,11 @@ A Spring Boot GraphQL API for managing records of collectable inventory.
 
 - Run tests: `./gradlew test`
 
+## Docker Environment
+
+This repo also offers a docker environment for local development.
+The best practice for using this environment is to make changes, run `./gradlew build`, run `docker compose build backend`, then run `docker compose up -d`.
+
 ## Managing Database
 
 This application uses a MySQL database to store collectable items and additional information.
