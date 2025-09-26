@@ -16,11 +16,15 @@ plugins {
     id 'com.netflix.dgs.codegen' version '8.1.1'
     id 'io.freefair.lombok' version '8.14'
     id 'org.flywaydb.flyway' version '11.10.4'
+    id 'com.github.node-gradle.node' version '7.1.0'
 }
 
 group = 'org.example'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '24'
+
+def npmExec = System.getProperty('os.name').toLowerCase().contains('windows') ? '/npm.cmd' : '/bin/npm'
+def nodeExec = System.getProperty('os.name').toLowerCase().contains('windows') ? '/node.exe' : '/bin/node'
 
 repositories {
     mavenCentral()
@@ -44,6 +48,12 @@ generateJava {
     generateClient = true
 }
 
+node {
+    download = true
+    version = '22.20.0'
+    npmVersion = '10.9.3'
+}
+
 spotless {
     java {
         target 'src/**/*.java'
@@ -53,6 +63,8 @@ spotless {
         removeWildcardImports()
         trimTrailingWhitespace()
         prettier(['prettier': '3.0.3', 'prettier-plugin-java': '2.3.0'])
+                .npmExecutable("${tasks.named('npmSetup').get().npmDir.get()}${npmExec}")
+                .nodeExecutable("${tasks.named('nodeSetup').get().nodeDir.get()}${nodeExec}")
                 .config(['parser': 'java', 'tabWidth': 4, 'plugins': ['prettier-plugin-java']])
         formatAnnotations()
         endWithNewline()
@@ -61,15 +73,32 @@ spotless {
         target 'src/main/resources/**/*.sql'
         trimTrailingWhitespace()
         prettier(['prettier': '3.0.3', 'prettier-plugin-sql': '0.19.2'])
+                .npmExecutable("${tasks.named('npmSetup').get().npmDir.get()}${npmExec}")
+                .nodeExecutable("${tasks.named('nodeSetup').get().nodeDir.get()}${nodeExec}")
                 .config(['parser': 'sql', 'tabWidth': 4, 'keywordCase': 'upper', 'plugins': ['prettier-plugin-sql']])
         endWithNewline()
     }
     format 'graphql', {
         target 'src/main/resources/**/*.graphql'
         trimTrailingWhitespace()
-        prettier(['prettier': '3.0.3']).config(['parser': 'graphql', 'tabWidth': 4])
+        prettier(['prettier': '3.0.3'])
+                .npmExecutable("${tasks.named('npmSetup').get().npmDir.get()}${npmExec}")
+                .nodeExecutable("${tasks.named('nodeSetup').get().nodeDir.get()}${nodeExec}")
+                .config(['parser': 'graphql', 'tabWidth': 4])
         endWithNewline()
     }
+}
+
+tasks.named('spotlessJava').configure {
+    it.dependsOn('nodeSetup', 'npmSetup')
+}
+
+tasks.named('spotlessSql').configure {
+    it.dependsOn('nodeSetup', 'npmSetup')
+}
+
+tasks.named('spotlessGraphql').configure {
+    it.dependsOn('nodeSetup', 'npmSetup')
 }
 
 flyway {
