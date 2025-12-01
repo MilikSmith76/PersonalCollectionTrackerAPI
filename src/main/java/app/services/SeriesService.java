@@ -7,9 +7,11 @@ import app.generated.types.SeriesInput;
 import app.repositories.SeriesRepository;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
 
 @Service
+@CacheConfig("series")
 public class SeriesService
     extends EntityService<
         SeriesDAO,

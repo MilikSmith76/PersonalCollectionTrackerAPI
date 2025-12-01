@@ -9,9 +9,11 @@ import app.generated.types.ShoeInput;
 import app.repositories.ShoeRepository;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
 
 @Service
+@CacheConfig("shoes")
 public class ShoeService
     extends EntityService<
         ShoeDAO,

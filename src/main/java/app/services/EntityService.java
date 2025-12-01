@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public abstract class EntityService<
@@ -30,6 +33,7 @@ public abstract class EntityService<
         this.repository = repository;
     }
 
+    @Cacheable(key = "#id", cacheResolver = "customCacheResolver")
     public Optional<EntityGQL> findById(String id) {
         Long parsedId = fromGraphQLId(id);
 
@@ -54,6 +58,7 @@ public abstract class EntityService<
             );
     }
 
+    @Cacheable(cacheResolver = "customCacheResolver")
     public List<EntityGQL> findByCriteria(Filter filter) {
         return this.repository.findByCriteria(filter)
             .stream()
@@ -63,6 +68,7 @@ public abstract class EntityService<
 
     protected abstract Optional<EntityGQL> merge(Input input);
 
+    @CachePut(key = "#result.id", cacheResolver = "customCacheResolver")
     public Optional<EntityGQL> save(Input input) {
         return this.merge(input);
     }
@@ -75,6 +81,7 @@ public abstract class EntityService<
         }
     }
 
+    @CachePut(key = "#id", cacheResolver = "customCacheResolver")
     public Optional<EntityGQL> update(Input input, String id) {
         Long parsedId = fromGraphQLId(id);
 
@@ -83,6 +90,7 @@ public abstract class EntityService<
         return this.merge(input);
     }
 
+    @CacheEvict(cacheResolver = "customCacheResolver", allEntries = true)
     public Boolean delete(String id) {
         Long parsedId = fromGraphQLId(id);
 

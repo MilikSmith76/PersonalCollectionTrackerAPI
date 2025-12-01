@@ -9,9 +9,11 @@ import app.generated.types.CardInput;
 import app.repositories.CardRepository;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
 
 @Service
+@CacheConfig("cards")
 public class CardService
     extends EntityService<
         CardDAO,

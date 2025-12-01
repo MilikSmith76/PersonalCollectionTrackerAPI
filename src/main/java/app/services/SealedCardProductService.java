@@ -9,9 +9,11 @@ import app.generated.types.SealedCardProductInput;
 import app.repositories.SealedCardProductRepository;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
 
 @Service
+@CacheConfig("sealedCardProducts")
 public class SealedCardProductService
     extends EntityService<
         SealedCardProductDAO,

@@ -9,9 +9,11 @@ import app.generated.types.CollectableInput;
 import app.repositories.CollectableRepository;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
 
 @Service
+@CacheConfig("collectables")
 public class CollectableService
     extends EntityService<
         CollectableDAO,

@@ -9,9 +9,11 @@ import app.generated.types.CardRarityInput;
 import app.repositories.CardRarityRepository;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
 
 @Service
+@CacheConfig("cardRarities")
 public class CardRarityService
     extends EntityService<
         CardRarityDAO,

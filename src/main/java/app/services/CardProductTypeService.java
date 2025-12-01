@@ -7,9 +7,11 @@ import app.generated.types.CardProductTypeInput;
 import app.repositories.CardProductTypeRepository;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
 
 @Service
+@CacheConfig("cardProductTypes")
 public class CardProductTypeService
     extends EntityService<
         CardProductTypeDAO,

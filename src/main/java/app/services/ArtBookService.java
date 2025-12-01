@@ -9,9 +9,11 @@ import app.generated.types.ArtBookInput;
 import app.repositories.ArtBookRepository;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
 
 @Service
+@CacheConfig("artBooks")
 public class ArtBookService
     extends EntityService<
         ArtBookDAO,

@@ -7,9 +7,11 @@ import app.generated.types.BrandInput;
 import app.repositories.BrandRepository;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
 
 @Service
+@CacheConfig("brands")
 public class BrandService
     extends EntityService<
         BrandDAO,

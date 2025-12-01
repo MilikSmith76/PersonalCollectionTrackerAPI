@@ -7,9 +7,11 @@ import app.generated.types.PublisherInput;
 import app.repositories.PublisherRepository;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
 
 @Service
+@CacheConfig("publishers")
 public class PublisherService
     extends EntityService<
         PublisherDAO,

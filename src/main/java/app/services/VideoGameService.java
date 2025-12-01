@@ -9,9 +9,11 @@ import app.generated.types.VideoGameInput;
 import app.repositories.VideoGameRepository;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
 
 @Service
+@CacheConfig("videoGames")
 public class VideoGameService
     extends EntityService<
         VideoGameDAO,
