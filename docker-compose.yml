@@ -12,6 +12,7 @@ services:
       - "8080:8080"
     depends_on:
       - sqlDatabase
+      - flyway
   sqlDatabase:
     image: mysql:9.4.0
     container_name: sql_database
@@ -25,6 +26,18 @@ services:
       - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
+  flyway:
+    image: flyway/flyway:latest
+    command:
+      -url=jdbc:mysql://sqlDatabase:3306/personal_collection
+      -user=user
+      -password=password
+      -connectRetries=5
+      migrate
+    volumes:
+      - ./src/main/resources/db/migration:/flyway/sql
+    depends_on:
+      - sqlDatabase
 
 volumes:
   db_data:
