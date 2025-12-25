@@ -3,7 +3,8 @@ package app.repositories;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import app.entities.BrandDAO;
-import app.generated.types.BrandInput;
+import app.test.utils.EntityDaoCreator;
+import app.test.utils.SqlFiles;
 import java.util.Optional;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +15,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.jdbc.Sql;
 
 @DataJpaTest
-@Sql("/sql/brand.sql")
+@Sql(SqlFiles.BRAND)
 public class BrandRepositoryTest {
 
     @Autowired
@@ -23,24 +24,14 @@ public class BrandRepositoryTest {
     @Autowired
     private BrandRepository brandRepository;
 
-    private final BrandDAO brand1 = BrandDAO.fromGraphQL(
-        BrandInput
-            .newBuilder()
-            .name("Brand 1")
-            .logoUrl("brand_1_logo_url")
-            .build()
-    );
+    private BrandDAO brand1;
 
-    private final BrandDAO brand2 = BrandDAO.fromGraphQL(
-        BrandInput
-            .newBuilder()
-            .name("Brand 2")
-            .logoUrl("brand_2_logo_url")
-            .build()
-    );
+    private BrandDAO brand2;
 
     @BeforeEach
     public void setUp() {
+        brand1 = EntityDaoCreator.createBrand("Brand 1", "brand_1_logo_url");
+        brand2 = EntityDaoCreator.createBrand("Brand 2", "brand_2_logo_url");
         entityManager.persist(brand1);
         entityManager.persist(brand2);
         entityManager.flush();
@@ -58,7 +49,7 @@ public class BrandRepositoryTest {
         // Arrange
 
         // Act
-        Optional<BrandDAO> result = brandRepository.findById(1L);
+        Optional<BrandDAO> result = brandRepository.findById(brand1.getId());
 
         // Assert
         assertThat(result.isPresent()).isEqualTo(true);

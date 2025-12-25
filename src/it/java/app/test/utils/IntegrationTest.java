@@ -16,19 +16,19 @@ public abstract class IntegrationTest {
         .withPassword("password");
 
     @DynamicPropertySource
-    static void configureProperties(DynamicPropertyRegistry registry) {
+    public static void configureProperties(DynamicPropertyRegistry registry) {
         registry.add("spring.datasource.url", mySQLContainer::getJdbcUrl);
         registry.add("spring.datasource.username", mySQLContainer::getUsername);
         registry.add("spring.datasource.password", mySQLContainer::getPassword);
     }
 
     @BeforeAll
-    static void spinUp() {
+    public static void spinUp() {
         mySQLContainer.start();
     }
 
     @AfterAll
-    static void spinDown() {
+    public static void spinDown() {
         mySQLContainer.stop();
     }
 }
