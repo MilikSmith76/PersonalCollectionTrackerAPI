@@ -9,6 +9,7 @@ buildscript {
 
 plugins {
     id 'java'
+    id 'idea'
     id 'application'
     id 'org.springframework.boot'  version '3.5.4'
     id 'io.spring.dependency-management' version '1.1.7'
@@ -30,6 +31,15 @@ repositories {
     mavenCentral()
 }
 
+sourceSets {
+    integrationTest {
+        java.srcDir 'src/it/java'
+        resources.srcDir 'src/it/resources'
+        compileClasspath += main.output + test.output
+        runtimeClasspath += output + compileClasspath
+    }
+}
+
 dependencies {
     implementation platform ('com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:10.2.4')
     implementation 'com.netflix.graphql.dgs:dgs-starter'
@@ -40,8 +50,19 @@ dependencies {
     implementation 'com.github.ben-manes.caffeine:caffeine:3.2.3'
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
-    testImplementation 'org.testcontainers:testcontainers:1.21.3'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'com.h2database:h2'
+    integrationTestImplementation platform ('org.testcontainers:testcontainers-bom:2.0.2')
+    integrationTestImplementation 'org.testcontainers:testcontainers:2.0.2'
+    integrationTestImplementation 'org.testcontainers:testcontainers-junit-jupiter:2.0.2'
+    integrationTestImplementation 'org.testcontainers:testcontainers-mysql'
+    integrationTestImplementation 'com.netflix.graphql.dgs:dgs-starter-test'
+}
+
+idea {
+    module {
+        testSources.from(sourceSets.integrationTest.java.srcDirs)
+    }
 }
 
 generateJava {
@@ -59,7 +80,7 @@ node {
 spotless {
     java {
         target 'src/**/*.java'
-        targetExclude '**/generated/**'
+        targetExclude '**/generated/**', 'build/**'
         importOrder()
         removeUnusedImports()
         removeWildcardImports()
@@ -91,6 +112,11 @@ spotless {
     }
 }
 
+configurations {
+    integrationTestImplementation.extendsFrom testImplementation
+    integrationTestRuntime.extendsFrom testRuntime
+}
+
 tasks.named('spotlessJava').configure {
     it.dependsOn('nodeSetup', 'npmSetup')
 }
@@ -101,6 +127,14 @@ tasks.named('spotlessSql').configure {
 
 tasks.named('spotlessGraphql').configure {
     it.dependsOn('nodeSetup', 'npmSetup')
+}
+
+tasks.register('integrationTest', Test) {
+    description = 'Runs integration tests.'
+    group = 'verification'
+    testClassesDirs = sourceSets.integrationTest.output.classesDirs
+    classpath = sourceSets.main.runtimeClasspath + sourceSets.integrationTest.runtimeClasspath
+    useJUnitPlatform()
 }
 
 flyway {
