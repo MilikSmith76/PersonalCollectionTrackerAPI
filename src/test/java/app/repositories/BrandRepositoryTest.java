@@ -111,6 +111,8 @@ public class BrandRepositoryTest {
         // Arrange
         String description = "This is a test description";
         brand2.setDescription(description);
+        brandRepository.save(brand2);
+
         BrandFilter filter = BrandFilter
             .newBuilder()
             .name("Brand 2")
