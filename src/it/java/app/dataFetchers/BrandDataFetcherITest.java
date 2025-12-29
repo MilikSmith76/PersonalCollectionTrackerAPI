@@ -355,8 +355,8 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
         // Arrange
         BrandInput updatedBrand2Input = BrandInput
             .newBuilder()
-            .id("0")
-            .name("Invalid Brand")
+            .id(brand2.getId().toString())
+            .name("Brand 2 Updated")
             .description("This is a test.")
             .build();
 
@@ -380,7 +380,7 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
     }
 
     @Test
-    public void deleteMutationShouldDeleteBrand() {
+    public void deleteBrandMutationShouldDeleteBrand() {
         // Arrange
         GraphQLQueryRequest graphQLQueryRequest = new GraphQLQueryRequest(
             new DeleteBrandGraphQLQuery.Builder()
@@ -406,7 +406,7 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
     }
 
     @Test
-    public void deleteMutationShouldErrorForNonExistentBrand() {
+    public void deleteBrandMutationShouldErrorForNonExistentBrand() {
         // Arrange
         GraphQLQueryRequest graphQLQueryRequest = new GraphQLQueryRequest(
             new DeleteBrandGraphQLQuery.Builder()
