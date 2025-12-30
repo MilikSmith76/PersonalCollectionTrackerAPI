@@ -184,9 +184,7 @@ public class BrandRepositoryTest {
 
         // Act
         AbstractThrowableAssert<?, ? extends Throwable> result =
-            assertThatThrownBy(() -> {
-                brandRepository.save(newBrand);
-            });
+            assertThatThrownBy(() -> brandRepository.save(newBrand));
 
         // Assert
         result.isInstanceOf(DataIntegrityViolationException.class);

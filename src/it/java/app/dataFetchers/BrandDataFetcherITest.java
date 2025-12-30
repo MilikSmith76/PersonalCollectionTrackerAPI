@@ -63,15 +63,9 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
 
     private final String createBrandMutationName = "CreateBrand";
 
-    private final String createBrandMutationKey = "createBrand";
-
     private final String updateBrandMutationName = "UpdateBrand";
 
-    private final String updateBrandMutationKey = "updateBrand";
-
     private final String deleteBrandMutationName = "DeleteBrand";
-
-    private final String deleteBrandMutationKey = "deleteBrand";
 
     @BeforeEach
     public void setUp() {
@@ -281,6 +275,8 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
             new CreateBrandProjectionRoot<>().id().name().logoUrl()
         );
 
+        String createBrandMutationKey = "createBrand";
+
         // Act
         Map<String, ?> result = gqlExecutor.execute(
             graphQLQueryRequest.serialize(),
@@ -343,6 +339,8 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
                 .logoUrl()
                 .description()
         );
+
+        String updateBrandMutationKey = "updateBrand";
 
         // Act
         Map<String, ?> result = gqlExecutor.execute(
@@ -428,6 +426,8 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
                 .id(brand2.getId().toString())
                 .build()
         );
+
+        String deleteBrandMutationKey = "deleteBrand";
 
         // Act
         Boolean result = gqlExecutor.executeAndReturnObject(

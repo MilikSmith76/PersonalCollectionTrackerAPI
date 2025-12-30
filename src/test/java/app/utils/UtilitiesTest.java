@@ -20,8 +20,6 @@ public class UtilitiesTest {
 
     private final String lettersString = "test";
 
-    private final String nullString = null;
-
     @Test
     public void isNumberShouldReturnTrueForNumber() {
         // Arrange
@@ -60,7 +58,7 @@ public class UtilitiesTest {
         // Arrange
 
         // Act
-        boolean result = Utilities.isNumber(nullString);
+        boolean result = Utilities.isNumber(null);
 
         // Assert
         assertThat(result).isFalse();
@@ -104,7 +102,7 @@ public class UtilitiesTest {
         // Arrange
 
         // Act
-        Long result = Utilities.getIdOrNull(nullString);
+        Long result = Utilities.getIdOrNull(null);
 
         // Assert
         assertThat(result).isNull();
@@ -129,10 +127,9 @@ public class UtilitiesTest {
     @Test
     public void getEntityGQLOrNullShouldReturnNullForNull() {
         // Arrange
-        BrandDAO entity = null;
 
         // Act
-        Brand result = Utilities.getEntityGQLOrNull(entity);
+        Brand result = Utilities.getEntityGQLOrNull(null);
 
         // Assert
         assertThat(result).isNull();
@@ -152,10 +149,9 @@ public class UtilitiesTest {
     @Test
     public void toGraphQLIdShouldReturnNullForNull() {
         // Arrange
-        Long id = null;
 
         // Act
-        String result = Utilities.toGraphQLId(id);
+        String result = Utilities.toGraphQLId(null);
 
         // Assert
         assertThat(result).isNull();
@@ -178,9 +174,7 @@ public class UtilitiesTest {
 
         // Act
         AbstractThrowableAssert<?, ? extends Throwable> result =
-            assertThatThrownBy(() -> {
-                Utilities.fromGraphQLId(alphaNumString);
-            });
+            assertThatThrownBy(() -> Utilities.fromGraphQLId(alphaNumString));
 
         // Assert
         result.isInstanceOf(IllegalArgumentException.class);
@@ -193,9 +187,7 @@ public class UtilitiesTest {
 
         // Act
         AbstractThrowableAssert<?, ? extends Throwable> result =
-            assertThatThrownBy(() -> {
-                Utilities.fromGraphQLId(lettersString);
-            });
+            assertThatThrownBy(() -> Utilities.fromGraphQLId(lettersString));
 
         // Assert
         result.isInstanceOf(IllegalArgumentException.class);
@@ -208,12 +200,10 @@ public class UtilitiesTest {
 
         // Act
         AbstractThrowableAssert<?, ? extends Throwable> result =
-            assertThatThrownBy(() -> {
-                Utilities.fromGraphQLId(nullString);
-            });
+            assertThatThrownBy(() -> Utilities.fromGraphQLId(null));
 
         // Assert
         result.isInstanceOf(IllegalArgumentException.class);
-        result.hasMessage("Invalid ID format: " + nullString);
+        result.hasMessage("Invalid ID format: " + null);
     }
 }

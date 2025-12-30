@@ -102,9 +102,9 @@ public class BrandServiceTest {
 
         // Act
         AbstractThrowableAssert<?, ? extends Throwable> result =
-            assertThatThrownBy(() -> {
-                brandService.findById(Constants.NON_EXISTENT_ID_STRING);
-            });
+            assertThatThrownBy(() ->
+                brandService.findById(Constants.NON_EXISTENT_ID_STRING)
+            );
 
         // Assert
         result.isInstanceOf(IllegalArgumentException.class);
@@ -202,9 +202,7 @@ public class BrandServiceTest {
 
         // Act
         AbstractThrowableAssert<?, ? extends Throwable> result =
-            assertThatThrownBy(() -> {
-                brandService.save(input);
-            });
+            assertThatThrownBy(() -> brandService.save(input));
 
         // Assert
         result.isInstanceOf(DataIntegrityViolationException.class);
@@ -245,9 +243,7 @@ public class BrandServiceTest {
 
         // Act
         AbstractThrowableAssert<?, ? extends Throwable> result =
-            assertThatThrownBy(() -> {
-                brandService.update(input, input.getId());
-            });
+            assertThatThrownBy(() -> brandService.update(input, input.getId()));
 
         // Assert
         result.isInstanceOf(IllegalArgumentException.class);
@@ -301,9 +297,9 @@ public class BrandServiceTest {
 
         // Act
         AbstractThrowableAssert<?, ? extends Throwable> result =
-            assertThatThrownBy(() -> {
-                brandService.delete(Constants.NON_EXISTENT_ID_STRING);
-            });
+            assertThatThrownBy(() ->
+                brandService.delete(Constants.NON_EXISTENT_ID_STRING)
+            );
 
         // Assert
         result.isInstanceOf(IllegalArgumentException.class);
