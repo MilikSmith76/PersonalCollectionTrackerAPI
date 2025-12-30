@@ -77,13 +77,13 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
     public void setUp() {
         brand1 =
         EntityDaoCreator.createBrand(
-            Constants.defaultFirstBrandName,
-            Constants.defaultFirstBrandLogoUrl
+            Constants.DEFAULT_FIRST_BRAND_NAME,
+            Constants.DEFAULT_FIRST_BRAND_LOGO_URL
         );
         brand2 =
         EntityDaoCreator.createBrand(
-            Constants.defaultSecondBrandName,
-            Constants.defaultSecondBrandLogoUrl
+            Constants.DEFAULT_SECOND_BRAND_NAME,
+            Constants.DEFAULT_SECOND_BRAND_LOGO_URL
         );
         brandRepository.save(brand1);
         brandRepository.save(brand2);
@@ -114,9 +114,12 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
         );
 
         // Assert
-        assertThat(result.get(EntityAttributes.ID)).isEqualTo(brand1.getId().toString());
-        assertThat(result.get(EntityAttributes.NAME)).isEqualTo(brand1.getName());
-        assertThat(result.get(EntityAttributes.LOGO_URL)).isEqualTo(brand1.getLogoUrl());
+        assertThat(result.get(EntityAttributes.ID))
+            .isEqualTo(brand1.getId().toString());
+        assertThat(result.get(EntityAttributes.NAME))
+            .isEqualTo(brand1.getName());
+        assertThat(result.get(EntityAttributes.LOGO_URL))
+            .isEqualTo(brand1.getLogoUrl());
     }
 
     @Test
@@ -137,9 +140,12 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
         );
 
         // Assert
-        assertThat(result.get(EntityAttributes.ID)).isEqualTo(brand2.getId().toString());
-        assertThat(result.get(EntityAttributes.NAME)).isEqualTo(brand2.getName());
-        assertThat(result.get(EntityAttributes.LOGO_URL)).isEqualTo(brand2.getLogoUrl());
+        assertThat(result.get(EntityAttributes.ID))
+            .isEqualTo(brand2.getId().toString());
+        assertThat(result.get(EntityAttributes.NAME))
+            .isEqualTo(brand2.getName());
+        assertThat(result.get(EntityAttributes.LOGO_URL))
+            .isEqualTo(brand2.getLogoUrl());
     }
 
     @Test
@@ -148,7 +154,7 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
         GraphQLQueryRequest graphQLQueryRequest = new GraphQLQueryRequest(
             new BrandGraphQLQuery.Builder()
                 .queryName(brandQueryName)
-                .id(Constants.testInvalidIdString)
+                .id(Constants.NON_EXISTENT_ID_STRING)
                 .build(),
             new BrandProjectionRoot<>().id().name().logoUrl()
         );
@@ -163,7 +169,7 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
         assertThat(result.getFirst().getErrorType().toString())
             .isEqualTo(Constants.GRAPH_QL_INTERNAL_ERROR);
         assertThat(result.getFirst().getMessage())
-            .isEqualTo(Constants.fullNonExistentIdErrorMessage);
+            .isEqualTo(Constants.FULL_NON_EXISTENT_ID_ERROR_MESSAGE);
     }
 
     @Test
@@ -184,12 +190,14 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
         assertThat(result.size()).isEqualTo(2);
         assertThat(result.getFirst().get(EntityAttributes.ID))
             .isEqualTo(brand1.getId().toString());
-        assertThat(result.getFirst().get(EntityAttributes.NAME)).isEqualTo(brand1.getName());
+        assertThat(result.getFirst().get(EntityAttributes.NAME))
+            .isEqualTo(brand1.getName());
         assertThat(result.getFirst().get(EntityAttributes.LOGO_URL))
             .isEqualTo(brand1.getLogoUrl());
         assertThat(result.getLast().get(EntityAttributes.ID))
             .isEqualTo(brand2.getId().toString());
-        assertThat(result.getLast().get(EntityAttributes.NAME)).isEqualTo(brand2.getName());
+        assertThat(result.getLast().get(EntityAttributes.NAME))
+            .isEqualTo(brand2.getName());
         assertThat(result.getLast().get(EntityAttributes.LOGO_URL))
             .isEqualTo(brand2.getLogoUrl());
     }
@@ -197,13 +205,13 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
     @Test
     public void brandsQueryShouldFilterBrands() {
         // Arrange
-        brand2.setDescription(Constants.defaultDescription);
+        brand2.setDescription(Constants.DEFAULT_DESCRIPTION);
         brandRepository.save(brand2);
 
         BrandFilter filter = BrandFilter
             .newBuilder()
-            .name(Constants.defaultBrandName)
-            .description(Constants.defaultDescription)
+            .name(Constants.DEFAULT_BRAND_NAME)
+            .description(Constants.DEFAULT_DESCRIPTION)
             .build();
 
         GraphQLQueryRequest graphQLQueryRequest = new GraphQLQueryRequest(
@@ -224,7 +232,8 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
         assertThat(result.size()).isEqualTo(1);
         assertThat(result.getFirst().get(EntityAttributes.ID))
             .isEqualTo(brand2.getId().toString());
-        assertThat(result.getFirst().get(EntityAttributes.NAME)).isEqualTo(brand2.getName());
+        assertThat(result.getFirst().get(EntityAttributes.NAME))
+            .isEqualTo(brand2.getName());
         assertThat(result.getFirst().get(EntityAttributes.LOGO_URL))
             .isEqualTo(brand2.getLogoUrl());
     }
@@ -234,7 +243,7 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
         // Arrange
         BrandFilter filter = BrandFilter
             .newBuilder()
-            .description(Constants.defaultDescription)
+            .description(Constants.DEFAULT_DESCRIPTION)
             .build();
 
         GraphQLQueryRequest graphQLQueryRequest = new GraphQLQueryRequest(
@@ -260,8 +269,8 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
         // Arrange
         BrandInput input = BrandInput
             .newBuilder()
-            .name(Constants.defaultBrandName)
-            .logoUrl(Constants.defaultBrandLogoUrl)
+            .name(Constants.DEFAULT_BRAND_NAME)
+            .logoUrl(Constants.DEFAULT_BRAND_LOGO_URL)
             .build();
 
         GraphQLQueryRequest graphQLQueryRequest = new GraphQLQueryRequest(
@@ -279,8 +288,10 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
         );
 
         // Assert
-        assertThat(result.get(EntityAttributes.NAME)).isEqualTo(input.getName());
-        assertThat(result.get(EntityAttributes.LOGO_URL)).isEqualTo(input.getLogoUrl());
+        assertThat(result.get(EntityAttributes.NAME))
+            .isEqualTo(input.getName());
+        assertThat(result.get(EntityAttributes.LOGO_URL))
+            .isEqualTo(input.getLogoUrl());
     }
 
     @Test
@@ -288,7 +299,7 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
         // Arrange
         BrandInput input = BrandInput
             .newBuilder()
-            .name(Constants.defaultBrandName)
+            .name(Constants.DEFAULT_BRAND_NAME)
             .build();
 
         GraphQLQueryRequest graphQLQueryRequest = new GraphQLQueryRequest(
@@ -318,7 +329,7 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
             .id(brand2.getId().toString())
             .name(String.format("%s Updated", brand2.getName()))
             .logoUrl(brand2.getLogoUrl())
-            .description(Constants.defaultDescription)
+            .description(Constants.DEFAULT_DESCRIPTION)
             .build();
 
         GraphQLQueryRequest graphQLQueryRequest = new GraphQLQueryRequest(
@@ -341,8 +352,10 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
 
         // Assert
         assertThat(result.get(EntityAttributes.ID)).isEqualTo(input.getId());
-        assertThat(result.get(EntityAttributes.NAME)).isEqualTo(input.getName());
-        assertThat(result.get(EntityAttributes.DESCRIPTION)).isEqualTo(input.getDescription());
+        assertThat(result.get(EntityAttributes.NAME))
+            .isEqualTo(input.getName());
+        assertThat(result.get(EntityAttributes.DESCRIPTION))
+            .isEqualTo(input.getDescription());
     }
 
     @Test
@@ -350,10 +363,10 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
         // Arrange
         BrandInput input = BrandInput
             .newBuilder()
-            .id(Constants.testInvalidIdString)
-            .name(Constants.defaultBrandName)
+            .id(Constants.NON_EXISTENT_ID_STRING)
+            .name(Constants.DEFAULT_BRAND_NAME)
             .logoUrl(brand2.getLogoUrl())
-            .description(Constants.defaultDescription)
+            .description(Constants.DEFAULT_DESCRIPTION)
             .build();
 
         GraphQLQueryRequest graphQLQueryRequest = new GraphQLQueryRequest(
@@ -374,7 +387,7 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
         assertThat(result.getFirst().getErrorType().toString())
             .isEqualTo(Constants.GRAPH_QL_INTERNAL_ERROR);
         assertThat(result.getFirst().getMessage())
-            .isEqualTo(Constants.fullNonExistentIdErrorMessage);
+            .isEqualTo(Constants.FULL_NON_EXISTENT_ID_ERROR_MESSAGE);
     }
 
     @Test
@@ -384,7 +397,7 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
             .newBuilder()
             .id(brand2.getId().toString())
             .name(String.format("%s Updated", brand2.getName()))
-            .description(Constants.defaultDescription)
+            .description(Constants.DEFAULT_DESCRIPTION)
             .build();
 
         GraphQLQueryRequest graphQLQueryRequest = new GraphQLQueryRequest(
@@ -440,7 +453,7 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
         GraphQLQueryRequest graphQLQueryRequest = new GraphQLQueryRequest(
             new DeleteBrandGraphQLQuery.Builder()
                 .queryName(deleteBrandMutationName)
-                .id(Constants.testInvalidIdString)
+                .id(Constants.NON_EXISTENT_ID_STRING)
                 .build()
         );
 
@@ -454,6 +467,6 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
         assertThat(result.getFirst().getErrorType().toString())
             .isEqualTo(Constants.GRAPH_QL_INTERNAL_ERROR);
         assertThat(result.getFirst().getMessage())
-            .isEqualTo(Constants.fullNonExistentIdErrorMessage);
+            .isEqualTo(Constants.FULL_NON_EXISTENT_ID_ERROR_MESSAGE);
     }
 }

@@ -5,7 +5,7 @@ import app.entities.EntityDAO;
 public class Utilities {
 
     public static boolean isNumber(String str) {
-        return str != null && str.matches(Constants.numberPattern);
+        return str != null && str.matches(Constants.NUMBER_PATTERN);
     }
 
     public static Long getIdOrNull(String id) {

@@ -114,8 +114,8 @@ public class UtilitiesTest {
     public void getEntityGQLOrNullShouldReturnEntityQLForEntity() {
         // Arrange
         BrandDAO entity = EntityDaoCreator.createBrand(
-            Constants.defaultBrandName,
-            Constants.defaultBrandLogoUrl
+            Constants.DEFAULT_BRAND_NAME,
+            Constants.DEFAULT_BRAND_LOGO_URL
         );
 
         // Act
@@ -143,10 +143,10 @@ public class UtilitiesTest {
         // Arrange
 
         // Act
-        String result = Utilities.toGraphQLId(Constants.testId);
+        String result = Utilities.toGraphQLId(Constants.DEFAULT_ID);
 
         // Assert
-        assertThat(result).isEqualTo(Constants.testIdString);
+        assertThat(result).isEqualTo(Constants.DEFAULT_ID_STRING);
     }
 
     @Test

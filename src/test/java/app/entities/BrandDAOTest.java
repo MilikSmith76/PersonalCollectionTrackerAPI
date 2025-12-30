@@ -19,17 +19,17 @@ public class BrandDAOTest {
         // Arrange
         BrandInput input = BrandInput
             .newBuilder()
-            .id(Constants.testIdString)
-            .name(Constants.defaultBrandName)
-            .logoUrl(Constants.defaultBrandLogoUrl)
-            .description(Constants.defaultDescription)
+            .id(Constants.DEFAULT_ID_STRING)
+            .name(Constants.DEFAULT_BRAND_NAME)
+            .logoUrl(Constants.DEFAULT_BRAND_LOGO_URL)
+            .description(Constants.DEFAULT_DESCRIPTION)
             .build();
 
         // Act
         BrandDAO result = new BrandDAO(input);
 
         // Assert
-        assertThat(result.getId()).isEqualTo(Constants.testId);
+        assertThat(result.getId()).isEqualTo(Constants.DEFAULT_ID);
         assertThat(result.getName()).isEqualTo(input.getName());
         assertThat(result.getLogoUrl()).isEqualTo(input.getLogoUrl());
         assertThat(result.getDescription()).isEqualTo(input.getDescription());
@@ -41,11 +41,11 @@ public class BrandDAOTest {
     public void toGraphQLShouldReturnBrandQL() {
         // Arrange
         BrandDAO brand = EntityDaoCreator.createBrand(
-            Constants.defaultBrandName,
-            Constants.defaultBrandLogoUrl
+            Constants.DEFAULT_BRAND_NAME,
+            Constants.DEFAULT_BRAND_LOGO_URL
         );
-        brand.setId(Constants.testId);
-        brand.setDescription(Constants.defaultDescription);
+        brand.setId(Constants.DEFAULT_ID);
+        brand.setDescription(Constants.DEFAULT_DESCRIPTION);
 
         // Act
         Brand result = brand.toGraphQL();
@@ -67,11 +67,11 @@ public class BrandDAOTest {
         Date currentTime = TestUtilities.getCurrentTimeStamp();
 
         BrandDAO brand = EntityDaoCreator.createBrand(
-            Constants.defaultBrandName,
-            Constants.defaultBrandLogoUrl
+            Constants.DEFAULT_BRAND_NAME,
+            Constants.DEFAULT_BRAND_LOGO_URL
         );
-        brand.setId(Constants.testId);
-        brand.setDescription(Constants.defaultDescription);
+        brand.setId(Constants.DEFAULT_ID);
+        brand.setDescription(Constants.DEFAULT_DESCRIPTION);
         brand.setDeleted(true);
         brand.setDeletedAt(currentTime);
         brand.setCreatedAt(currentTime);
