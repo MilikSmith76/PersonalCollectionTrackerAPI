@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import app.entities.BrandDAO;
 import app.generated.types.Brand;
+import app.test.utils.Constants;
 import app.test.utils.EntityDaoCreator;
 import org.assertj.core.api.AbstractThrowableAssert;
 import org.junit.jupiter.api.Test;
@@ -13,13 +14,20 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class UtilitiesTest {
 
+    private final String numberString = "12345";
+
+    private final String alphaNumString = "0a1b2c6";
+
+    private final String lettersString = "test";
+
+    private final String nullString = null;
+
     @Test
     public void isNumberShouldReturnTrueForNumber() {
         // Arrange
-        String value = "12345";
 
         // Act
-        boolean result = Utilities.isNumber(value);
+        boolean result = Utilities.isNumber(numberString);
 
         // Assert
         assertThat(result).isTrue();
@@ -28,10 +36,9 @@ public class UtilitiesTest {
     @Test
     public void isNumberShouldReturnFalseForAlphaNum() {
         // Arrange
-        String value = "0a1b2c6";
 
         // Act
-        boolean result = Utilities.isNumber(value);
+        boolean result = Utilities.isNumber(alphaNumString);
 
         // Assert
         assertThat(result).isFalse();
@@ -40,10 +47,9 @@ public class UtilitiesTest {
     @Test
     public void isNumberShouldReturnFalseForLetters() {
         // Arrange
-        String value = "test";
 
         // Act
-        boolean result = Utilities.isNumber(value);
+        boolean result = Utilities.isNumber(lettersString);
 
         // Assert
         assertThat(result).isFalse();
@@ -52,10 +58,9 @@ public class UtilitiesTest {
     @Test
     public void isNumberShouldReturnFalseForNull() {
         // Arrange
-        String value = null;
 
         // Act
-        boolean result = Utilities.isNumber(value);
+        boolean result = Utilities.isNumber(nullString);
 
         // Assert
         assertThat(result).isFalse();
@@ -64,22 +69,20 @@ public class UtilitiesTest {
     @Test
     public void getIdOrNullShouldReturnIdForNumber() {
         // Arrange
-        String value = "12345";
 
         // Act
-        Long result = Utilities.getIdOrNull(value);
+        Long result = Utilities.getIdOrNull(numberString);
 
         // Assert
         assertThat(result).isEqualTo(12345L);
     }
 
     @Test
-    public void getIdOrNullShouldReturnNullForNonNumber() {
+    public void getIdOrNullShouldReturnNullForAlphaNum() {
         // Arrange
-        String value = "0a1b2c6";
 
         // Act
-        Long result = Utilities.getIdOrNull(value);
+        Long result = Utilities.getIdOrNull(alphaNumString);
 
         // Assert
         assertThat(result).isNull();
@@ -88,10 +91,9 @@ public class UtilitiesTest {
     @Test
     public void getIdOrNullShouldReturnNullForLetters() {
         // Arrange
-        String value = "0a1b2c6";
 
         // Act
-        Long result = Utilities.getIdOrNull(value);
+        Long result = Utilities.getIdOrNull(lettersString);
 
         // Assert
         assertThat(result).isNull();
@@ -100,10 +102,9 @@ public class UtilitiesTest {
     @Test
     public void getIdOrNullShouldReturnNullForNull() {
         // Arrange
-        String value = null;
 
         // Act
-        Long result = Utilities.getIdOrNull(value);
+        Long result = Utilities.getIdOrNull(nullString);
 
         // Assert
         assertThat(result).isNull();
@@ -113,8 +114,8 @@ public class UtilitiesTest {
     public void getEntityGQLOrNullShouldReturnEntityQLForEntity() {
         // Arrange
         BrandDAO entity = EntityDaoCreator.createBrand(
-            "Brand",
-            "brand_logo_url"
+            Constants.defaultBrandName,
+            Constants.defaultBrandLogoUrl
         );
 
         // Act
@@ -140,13 +141,12 @@ public class UtilitiesTest {
     @Test
     public void toGraphQLIdShouldReturnIdForId() {
         // Arrange
-        Long id = 1L;
 
         // Act
-        String result = Utilities.toGraphQLId(id);
+        String result = Utilities.toGraphQLId(Constants.testId);
 
         // Assert
-        assertThat(result).isEqualTo("1");
+        assertThat(result).isEqualTo(Constants.testIdString);
     }
 
     @Test
@@ -164,60 +164,56 @@ public class UtilitiesTest {
     @Test
     public void fromGraphQLIdShouldReturnIdForNumber() {
         // Arrange
-        String value = "12345";
 
         // Act
-        Long result = Utilities.fromGraphQLId(value);
+        Long result = Utilities.fromGraphQLId(numberString);
 
         // Assert
-        assertThat(result).isEqualTo(12345L);
+        assertThat(result).isEqualTo(Long.parseLong(numberString));
     }
 
     @Test
-    public void fromGraphQLIdShouldErrorForNonNumber() {
+    public void fromGraphQLIdShouldErrorForAlphaNum() {
         // Arrange
-        String value = "0a1b2c6";
 
         // Act
         AbstractThrowableAssert<?, ? extends Throwable> result =
             assertThatThrownBy(() -> {
-                Utilities.fromGraphQLId(value);
+                Utilities.fromGraphQLId(alphaNumString);
             });
 
         // Assert
         result.isInstanceOf(IllegalArgumentException.class);
-        result.hasMessage("Invalid ID format: " + value);
+        result.hasMessage("Invalid ID format: " + alphaNumString);
     }
 
     @Test
     public void fromGraphQLIdShouldErrorForLetters() {
         // Arrange
-        String value = "0a1b2c6";
 
         // Act
         AbstractThrowableAssert<?, ? extends Throwable> result =
             assertThatThrownBy(() -> {
-                Utilities.fromGraphQLId(value);
+                Utilities.fromGraphQLId(lettersString);
             });
 
         // Assert
         result.isInstanceOf(IllegalArgumentException.class);
-        result.hasMessage("Invalid ID format: " + value);
+        result.hasMessage("Invalid ID format: " + lettersString);
     }
 
     @Test
     public void fromGraphQLIdShouldErrorForNull() {
         // Arrange
-        String value = null;
 
         // Act
         AbstractThrowableAssert<?, ? extends Throwable> result =
             assertThatThrownBy(() -> {
-                Utilities.fromGraphQLId(value);
+                Utilities.fromGraphQLId(nullString);
             });
 
         // Assert
         result.isInstanceOf(IllegalArgumentException.class);
-        result.hasMessage("Invalid ID format: " + value);
+        result.hasMessage("Invalid ID format: " + nullString);
     }
 }

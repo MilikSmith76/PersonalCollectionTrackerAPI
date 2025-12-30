@@ -4,8 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import app.generated.types.Brand;
 import app.generated.types.BrandInput;
+import app.test.utils.Constants;
 import app.test.utils.EntityDaoCreator;
-import java.sql.Timestamp;
+import app.test.utils.TestUtilities;
 import java.util.Date;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,21 +19,21 @@ public class BrandDAOTest {
         // Arrange
         BrandInput input = BrandInput
             .newBuilder()
-            .id("1")
-            .name("Brand")
-            .logoUrl("brand_logo_url")
-            .description("This is a description.")
+            .id(Constants.testIdString)
+            .name(Constants.defaultBrandName)
+            .logoUrl(Constants.defaultBrandLogoUrl)
+            .description(Constants.defaultDescription)
             .build();
 
         // Act
         BrandDAO result = new BrandDAO(input);
 
         // Assert
-        assertThat(result.getId()).isEqualTo(1L);
+        assertThat(result.getId()).isEqualTo(Constants.testId);
         assertThat(result.getName()).isEqualTo(input.getName());
         assertThat(result.getLogoUrl()).isEqualTo(input.getLogoUrl());
         assertThat(result.getDescription()).isEqualTo(input.getDescription());
-        assertThat(result.getDeleted()).isEqualTo(false);
+        assertThat(result.getDeleted()).isFalse();
         assertThat(result.getDeletedAt()).isNull();
     }
 
@@ -40,11 +41,11 @@ public class BrandDAOTest {
     public void toGraphQLShouldReturnBrandQL() {
         // Arrange
         BrandDAO brand = EntityDaoCreator.createBrand(
-            "Brand",
-            "brand_logo_url"
+            Constants.defaultBrandName,
+            Constants.defaultBrandLogoUrl
         );
-        brand.setId(1L);
-        brand.setDescription("This is a description.");
+        brand.setId(Constants.testId);
+        brand.setDescription(Constants.defaultDescription);
 
         // Act
         Brand result = brand.toGraphQL();
@@ -54,7 +55,7 @@ public class BrandDAOTest {
         assertThat(result.getName()).isEqualTo(brand.getName());
         assertThat(result.getLogoUrl()).isEqualTo(brand.getLogoUrl());
         assertThat(result.getDescription()).isEqualTo(brand.getDescription());
-        assertThat(result.getDeleted()).isEqualTo(false);
+        assertThat(result.getDeleted()).isFalse();
         assertThat(result.getDeletedAt()).isNull();
         assertThat(result.getCreatedAt()).isNotNull();
         assertThat(result.getUpdatedAt()).isNotNull();
@@ -63,14 +64,14 @@ public class BrandDAOTest {
     @Test
     public void toGraphQLShouldReturnComplexBrandQL() {
         // Arrange
-        Date currentTime = new Timestamp(System.currentTimeMillis());
+        Date currentTime = TestUtilities.getCurrentTimeStamp();
 
         BrandDAO brand = EntityDaoCreator.createBrand(
-            "Brand",
-            "brand_logo_url"
+            Constants.defaultBrandName,
+            Constants.defaultBrandLogoUrl
         );
-        brand.setId(1L);
-        brand.setDescription("This is a description.");
+        brand.setId(Constants.testId);
+        brand.setDescription(Constants.defaultDescription);
         brand.setDeleted(true);
         brand.setDeletedAt(currentTime);
         brand.setCreatedAt(currentTime);

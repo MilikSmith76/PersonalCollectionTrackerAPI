@@ -52,10 +52,38 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
 
     private BrandDAO brand2;
 
+    private final String brandQueryName = "Brand";
+
+    private final String brandQueryKey = "brand";
+
+    private final String brandsQueryName = "Brands";
+
+    private final String brandsQueryKey = "brands";
+
+    private final String createBrandMutationName = "CreateBrand";
+
+    private final String createBrandMutationKey = "createBrand";
+
+    private final String updateBrandMutationName = "UpdateBrand";
+
+    private final String updateBrandMutationKey = "updateBrand";
+
+    private final String deleteBrandMutationName = "DeleteBrand";
+
+    private final String deleteBrandMutationKey = "deleteBrand";
+
     @BeforeEach
     public void setUp() {
-        brand1 = EntityDaoCreator.createBrand("Brand 1", "brand_1_logo_url");
-        brand2 = EntityDaoCreator.createBrand("Brand 2", "brand_2_logo_url");
+        brand1 =
+        EntityDaoCreator.createBrand(
+            Constants.defaultFirstBrandName,
+            Constants.defaultFirstBrandLogoUrl
+        );
+        brand2 =
+        EntityDaoCreator.createBrand(
+            Constants.defaultSecondBrandName,
+            Constants.defaultSecondBrandLogoUrl
+        );
         brandRepository.save(brand1);
         brandRepository.save(brand2);
         brandRepository.flush();
@@ -72,7 +100,7 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
         // Arrange
         GraphQLQueryRequest graphQLQueryRequest = new GraphQLQueryRequest(
             new BrandGraphQLQuery.Builder()
-                .queryName("Brand")
+                .queryName(brandQueryName)
                 .id(brand1.getId().toString())
                 .build(),
             new BrandProjectionRoot<>().id().name().logoUrl()
@@ -81,7 +109,7 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
         // Act
         Map<String, ?> result = gqlExecutor.execute(
             graphQLQueryRequest.serialize(),
-            "brand"
+            brandQueryKey
         );
 
         // Assert
@@ -95,7 +123,7 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
         // Arrange
         GraphQLQueryRequest graphQLQueryRequest = new GraphQLQueryRequest(
             new BrandGraphQLQuery.Builder()
-                .queryName("Brand")
+                .queryName(brandQueryName)
                 .id(brand2.getId().toString())
                 .build(),
             new BrandProjectionRoot<>().id().name().logoUrl()
@@ -104,7 +132,7 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
         // Act
         Map<String, ?> result = gqlExecutor.execute(
             graphQLQueryRequest.serialize(),
-            "brand"
+            brandQueryKey
         );
 
         // Assert
@@ -117,7 +145,10 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
     public void brandQueryShouldReturnErrorForNonExistentId() {
         // Arrange
         GraphQLQueryRequest graphQLQueryRequest = new GraphQLQueryRequest(
-            new BrandGraphQLQuery.Builder().queryName("Brand").id("0").build(),
+            new BrandGraphQLQuery.Builder()
+                .queryName(brandQueryName)
+                .id(Constants.testInvalidIdString)
+                .build(),
             new BrandProjectionRoot<>().id().name().logoUrl()
         );
 
@@ -131,23 +162,21 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
         assertThat(result.getFirst().getErrorType().toString())
             .isEqualTo(Constants.GRAPH_QL_INTERNAL_ERROR);
         assertThat(result.getFirst().getMessage())
-            .isEqualTo(
-                "java.lang.IllegalArgumentException: Record with ID 0 does not exist."
-            );
+            .isEqualTo(Constants.fullNonExistentIdErrorMessage);
     }
 
     @Test
     public void brandsQueryShouldReturnBrands() {
         // Arrange
         GraphQLQueryRequest graphQLQueryRequest = new GraphQLQueryRequest(
-            new BrandsGraphQLQuery.Builder().queryName("Brands").build(),
+            new BrandsGraphQLQuery.Builder().queryName(brandsQueryName).build(),
             new BrandsProjectionRoot<>().id().name().logoUrl()
         );
 
         // Act
         List<Map<String, ?>> result = gqlExecutor.executeAndReturnArray(
             graphQLQueryRequest.serialize(),
-            "brands"
+            brandsQueryKey
         );
 
         // Assert
@@ -165,20 +194,20 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
     }
 
     @Test
-    public void brandsQueryShouldFilterSuccessfully() {
+    public void brandsQueryShouldFilterBrands() {
         // Arrange
-        brand2.setDescription("This is a test.");
+        brand2.setDescription(Constants.defaultDescription);
         brandRepository.save(brand2);
 
         BrandFilter filter = BrandFilter
             .newBuilder()
-            .name("Brand")
-            .description("test")
+            .name(Constants.defaultBrandName)
+            .description(Constants.defaultDescription)
             .build();
 
         GraphQLQueryRequest graphQLQueryRequest = new GraphQLQueryRequest(
             new BrandsGraphQLQuery.Builder()
-                .queryName("Brands")
+                .queryName(brandQueryName)
                 .filter(filter)
                 .build(),
             new BrandsProjectionRoot<>().id().name().logoUrl()
@@ -187,7 +216,7 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
         // Act
         List<Map<String, ?>> result = gqlExecutor.executeAndReturnArray(
             graphQLQueryRequest.serialize(),
-            "brands"
+            brandsQueryKey
         );
 
         // Assert
@@ -204,12 +233,12 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
         // Arrange
         BrandFilter filter = BrandFilter
             .newBuilder()
-            .description("test")
+            .description(Constants.defaultDescription)
             .build();
 
         GraphQLQueryRequest graphQLQueryRequest = new GraphQLQueryRequest(
             new BrandsGraphQLQuery.Builder()
-                .queryName("Brands")
+                .queryName(brandsQueryName)
                 .filter(filter)
                 .build(),
             new BrandsProjectionRoot<>().id().name().logoUrl()
@@ -218,7 +247,7 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
         // Act
         List<Map<String, ?>> result = gqlExecutor.executeAndReturnArray(
             graphQLQueryRequest.serialize(),
-            "brands"
+            brandsQueryKey
         );
 
         // Assert
@@ -228,16 +257,16 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
     @Test
     public void createBrandMutationShouldCreateNewBrand() {
         // Arrange
-        BrandInput brand3Input = BrandInput
+        BrandInput input = BrandInput
             .newBuilder()
-            .name("Brand 3")
-            .logoUrl("brand_3_logo_url")
+            .name(Constants.defaultBrandName)
+            .logoUrl(Constants.defaultBrandLogoUrl)
             .build();
 
         GraphQLQueryRequest graphQLQueryRequest = new GraphQLQueryRequest(
             new CreateBrandGraphQLQuery.Builder()
-                .queryName("CreateBrand")
-                .input(brand3Input)
+                .queryName(createBrandMutationName)
+                .input(input)
                 .build(),
             new CreateBrandProjectionRoot<>().id().name().logoUrl()
         );
@@ -245,26 +274,26 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
         // Act
         Map<String, ?> result = gqlExecutor.execute(
             graphQLQueryRequest.serialize(),
-            "createBrand"
+            createBrandMutationKey
         );
 
         // Assert
-        assertThat(result.get("name")).isEqualTo(brand3Input.getName());
-        assertThat(result.get("logoUrl")).isEqualTo(brand3Input.getLogoUrl());
+        assertThat(result.get("name")).isEqualTo(input.getName());
+        assertThat(result.get("logoUrl")).isEqualTo(input.getLogoUrl());
     }
 
     @Test
     public void createBrandMutationShouldErrorForInvalidBrand() {
         // Arrange
-        BrandInput brand3Input = BrandInput
+        BrandInput input = BrandInput
             .newBuilder()
-            .name("Brand 3")
+            .name(Constants.defaultBrandName)
             .build();
 
         GraphQLQueryRequest graphQLQueryRequest = new GraphQLQueryRequest(
             new CreateBrandGraphQLQuery.Builder()
-                .queryName("CreateBrand")
-                .input(brand3Input)
+                .queryName(createBrandMutationName)
+                .input(input)
                 .build(),
             new CreateBrandProjectionRoot<>().id().name().logoUrl()
         );
@@ -283,18 +312,18 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
     @Test
     public void updateBrandMutationShouldUpdateBrand() {
         // Arrange
-        BrandInput updatedBrand2Input = BrandInput
+        BrandInput input = BrandInput
             .newBuilder()
             .id(brand2.getId().toString())
-            .name("Brand 2 Updated")
+            .name(String.format("%s Updated", brand2.getName()))
             .logoUrl(brand2.getLogoUrl())
-            .description("This is a test.")
+            .description(Constants.defaultDescription)
             .build();
 
         GraphQLQueryRequest graphQLQueryRequest = new GraphQLQueryRequest(
             new UpdateBrandGraphQLQuery.Builder()
-                .queryName("UpdateBrand")
-                .input(updatedBrand2Input)
+                .queryName(updateBrandMutationName)
+                .input(input)
                 .build(),
             new UpdateBrandProjectionRoot<>()
                 .id()
@@ -306,31 +335,30 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
         // Act
         Map<String, ?> result = gqlExecutor.execute(
             graphQLQueryRequest.serialize(),
-            "updateBrand"
+            updateBrandMutationKey
         );
 
         // Assert
-        assertThat(result.get("id")).isEqualTo(updatedBrand2Input.getId());
-        assertThat(result.get("name")).isEqualTo(updatedBrand2Input.getName());
-        assertThat(result.get("description"))
-            .isEqualTo(updatedBrand2Input.getDescription());
+        assertThat(result.get("id")).isEqualTo(input.getId());
+        assertThat(result.get("name")).isEqualTo(input.getName());
+        assertThat(result.get("description")).isEqualTo(input.getDescription());
     }
 
     @Test
     public void updateBrandMutationShouldErrorForNonExistentBrand() {
         // Arrange
-        BrandInput updatedBrand2Input = BrandInput
+        BrandInput input = BrandInput
             .newBuilder()
-            .id("0")
-            .name("Invalid Brand")
+            .id(Constants.testInvalidIdString)
+            .name(Constants.defaultBrandName)
             .logoUrl(brand2.getLogoUrl())
-            .description("This is a test.")
+            .description(Constants.defaultDescription)
             .build();
 
         GraphQLQueryRequest graphQLQueryRequest = new GraphQLQueryRequest(
             new UpdateBrandGraphQLQuery.Builder()
-                .queryName("UpdateBrand")
-                .input(updatedBrand2Input)
+                .queryName(updateBrandMutationName)
+                .input(input)
                 .build(),
             new UpdateBrandProjectionRoot<>().id().name().logoUrl()
         );
@@ -345,25 +373,23 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
         assertThat(result.getFirst().getErrorType().toString())
             .isEqualTo(Constants.GRAPH_QL_INTERNAL_ERROR);
         assertThat(result.getFirst().getMessage())
-            .isEqualTo(
-                "java.lang.IllegalArgumentException: Record with ID 0 does not exist."
-            );
+            .isEqualTo(Constants.fullNonExistentIdErrorMessage);
     }
 
     @Test
     public void updateBrandMutationShouldErrorForInvalidBrand() {
         // Arrange
-        BrandInput updatedBrand2Input = BrandInput
+        BrandInput input = BrandInput
             .newBuilder()
             .id(brand2.getId().toString())
-            .name("Brand 2 Updated")
-            .description("This is a test.")
+            .name(String.format("%s Updated", brand2.getName()))
+            .description(Constants.defaultDescription)
             .build();
 
         GraphQLQueryRequest graphQLQueryRequest = new GraphQLQueryRequest(
             new UpdateBrandGraphQLQuery.Builder()
-                .queryName("UpdateBrand")
-                .input(updatedBrand2Input)
+                .queryName(updateBrandMutationName)
+                .input(input)
                 .build(),
             new UpdateBrandProjectionRoot<>().id().name().logoUrl()
         );
@@ -384,7 +410,7 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
         // Arrange
         GraphQLQueryRequest graphQLQueryRequest = new GraphQLQueryRequest(
             new DeleteBrandGraphQLQuery.Builder()
-                .queryName("DeleteBrand")
+                .queryName(deleteBrandMutationName)
                 .id(brand2.getId().toString())
                 .build()
         );
@@ -392,16 +418,18 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
         // Act
         Boolean result = gqlExecutor.executeAndReturnObject(
             graphQLQueryRequest.serialize(),
-            "deleteBrand"
+            deleteBrandMutationKey
         );
+
+        // Assert
+        assertThat(result).isTrue();
 
         Optional<BrandDAO> deletedBrand2 = brandRepository.findById(
             brand2.getId()
         );
 
-        // Assert
-        assertThat(result).isEqualTo(true);
-        assertThat(deletedBrand2.get().getDeleted()).isEqualTo(true);
+        assertThat(deletedBrand2.isPresent()).isTrue();
+        assertThat(deletedBrand2.get().getDeleted()).isTrue();
         assertThat(deletedBrand2.get().getDeletedAt()).isNotNull();
     }
 
@@ -410,8 +438,8 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
         // Arrange
         GraphQLQueryRequest graphQLQueryRequest = new GraphQLQueryRequest(
             new DeleteBrandGraphQLQuery.Builder()
-                .queryName("DeleteBrand")
-                .id("0")
+                .queryName(deleteBrandMutationName)
+                .id(Constants.testInvalidIdString)
                 .build()
         );
 
@@ -425,8 +453,6 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
         assertThat(result.getFirst().getErrorType().toString())
             .isEqualTo(Constants.GRAPH_QL_INTERNAL_ERROR);
         assertThat(result.getFirst().getMessage())
-            .isEqualTo(
-                "java.lang.IllegalArgumentException: Record with ID 0 does not exist."
-            );
+            .isEqualTo(Constants.fullNonExistentIdErrorMessage);
     }
 }
