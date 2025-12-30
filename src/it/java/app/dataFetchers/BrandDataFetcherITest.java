@@ -16,6 +16,7 @@ import app.generated.types.BrandFilter;
 import app.generated.types.BrandInput;
 import app.repositories.BrandRepository;
 import app.test.utils.Constants;
+import app.test.utils.EntityAttributes;
 import app.test.utils.EntityDaoCreator;
 import app.test.utils.GqlIntegrationTest;
 import app.test.utils.SqlFiles;
@@ -113,9 +114,9 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
         );
 
         // Assert
-        assertThat(result.get("id")).isEqualTo(brand1.getId().toString());
-        assertThat(result.get("name")).isEqualTo(brand1.getName());
-        assertThat(result.get("logoUrl")).isEqualTo(brand1.getLogoUrl());
+        assertThat(result.get(EntityAttributes.ID)).isEqualTo(brand1.getId().toString());
+        assertThat(result.get(EntityAttributes.NAME)).isEqualTo(brand1.getName());
+        assertThat(result.get(EntityAttributes.LOGO_URL)).isEqualTo(brand1.getLogoUrl());
     }
 
     @Test
@@ -136,9 +137,9 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
         );
 
         // Assert
-        assertThat(result.get("id")).isEqualTo(brand2.getId().toString());
-        assertThat(result.get("name")).isEqualTo(brand2.getName());
-        assertThat(result.get("logoUrl")).isEqualTo(brand2.getLogoUrl());
+        assertThat(result.get(EntityAttributes.ID)).isEqualTo(brand2.getId().toString());
+        assertThat(result.get(EntityAttributes.NAME)).isEqualTo(brand2.getName());
+        assertThat(result.get(EntityAttributes.LOGO_URL)).isEqualTo(brand2.getLogoUrl());
     }
 
     @Test
@@ -181,15 +182,15 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
 
         // Assert
         assertThat(result.size()).isEqualTo(2);
-        assertThat(result.getFirst().get("id"))
+        assertThat(result.getFirst().get(EntityAttributes.ID))
             .isEqualTo(brand1.getId().toString());
-        assertThat(result.getFirst().get("name")).isEqualTo(brand1.getName());
-        assertThat(result.getFirst().get("logoUrl"))
+        assertThat(result.getFirst().get(EntityAttributes.NAME)).isEqualTo(brand1.getName());
+        assertThat(result.getFirst().get(EntityAttributes.LOGO_URL))
             .isEqualTo(brand1.getLogoUrl());
-        assertThat(result.getLast().get("id"))
+        assertThat(result.getLast().get(EntityAttributes.ID))
             .isEqualTo(brand2.getId().toString());
-        assertThat(result.getLast().get("name")).isEqualTo(brand2.getName());
-        assertThat(result.getLast().get("logoUrl"))
+        assertThat(result.getLast().get(EntityAttributes.NAME)).isEqualTo(brand2.getName());
+        assertThat(result.getLast().get(EntityAttributes.LOGO_URL))
             .isEqualTo(brand2.getLogoUrl());
     }
 
@@ -221,10 +222,10 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
 
         // Assert
         assertThat(result.size()).isEqualTo(1);
-        assertThat(result.getFirst().get("id"))
+        assertThat(result.getFirst().get(EntityAttributes.ID))
             .isEqualTo(brand2.getId().toString());
-        assertThat(result.getFirst().get("name")).isEqualTo(brand2.getName());
-        assertThat(result.getFirst().get("logoUrl"))
+        assertThat(result.getFirst().get(EntityAttributes.NAME)).isEqualTo(brand2.getName());
+        assertThat(result.getFirst().get(EntityAttributes.LOGO_URL))
             .isEqualTo(brand2.getLogoUrl());
     }
 
@@ -278,8 +279,8 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
         );
 
         // Assert
-        assertThat(result.get("name")).isEqualTo(input.getName());
-        assertThat(result.get("logoUrl")).isEqualTo(input.getLogoUrl());
+        assertThat(result.get(EntityAttributes.NAME)).isEqualTo(input.getName());
+        assertThat(result.get(EntityAttributes.LOGO_URL)).isEqualTo(input.getLogoUrl());
     }
 
     @Test
@@ -339,9 +340,9 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
         );
 
         // Assert
-        assertThat(result.get("id")).isEqualTo(input.getId());
-        assertThat(result.get("name")).isEqualTo(input.getName());
-        assertThat(result.get("description")).isEqualTo(input.getDescription());
+        assertThat(result.get(EntityAttributes.ID)).isEqualTo(input.getId());
+        assertThat(result.get(EntityAttributes.NAME)).isEqualTo(input.getName());
+        assertThat(result.get(EntityAttributes.DESCRIPTION)).isEqualTo(input.getDescription());
     }
 
     @Test
