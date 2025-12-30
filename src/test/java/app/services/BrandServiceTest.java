@@ -8,9 +8,9 @@ import app.generated.types.Brand;
 import app.generated.types.BrandFilter;
 import app.generated.types.BrandInput;
 import app.repositories.BrandRepository;
-import app.test.utils.Constants;
 import app.test.utils.EntityDaoCreator;
 import app.test.utils.SqlFiles;
+import app.test.utils.TestConstants;
 import java.util.List;
 import java.util.Optional;
 import org.assertj.core.api.AbstractThrowableAssert;
@@ -46,13 +46,13 @@ public class BrandServiceTest {
     public void setUp() {
         brand1 =
         EntityDaoCreator.createBrand(
-            Constants.DEFAULT_FIRST_BRAND_NAME,
-            Constants.DEFAULT_FIRST_BRAND_LOGO_URL
+            TestConstants.DEFAULT_FIRST_BRAND_NAME,
+            TestConstants.DEFAULT_FIRST_BRAND_LOGO_URL
         );
         brand2 =
         EntityDaoCreator.createBrand(
-            Constants.DEFAULT_SECOND_BRAND_NAME,
-            Constants.DEFAULT_SECOND_BRAND_LOGO_URL
+            TestConstants.DEFAULT_SECOND_BRAND_NAME,
+            TestConstants.DEFAULT_SECOND_BRAND_LOGO_URL
         );
         entityManager.persist(brand1);
         entityManager.persist(brand2);
@@ -103,12 +103,12 @@ public class BrandServiceTest {
         // Act
         AbstractThrowableAssert<?, ? extends Throwable> result =
             assertThatThrownBy(() ->
-                brandService.findById(Constants.NON_EXISTENT_ID_STRING)
+                brandService.findById(TestConstants.NON_EXISTENT_ID_STRING)
             );
 
         // Assert
         result.isInstanceOf(IllegalArgumentException.class);
-        result.hasMessage(Constants.NON_EXISTENT_ID_ERROR_MESSAGE);
+        result.hasMessage(TestConstants.NON_EXISTENT_ID_ERROR_MESSAGE);
     }
 
     @Test
@@ -135,14 +135,14 @@ public class BrandServiceTest {
     @Test
     public void findByCriteriaShouldFilterBrands() {
         // Arrange
-        brand2.setDescription(Constants.DEFAULT_DESCRIPTION);
+        brand2.setDescription(TestConstants.DEFAULT_DESCRIPTION);
         entityManager.persist(brand2);
         entityManager.flush();
 
         BrandFilter filter = BrandFilter
             .newBuilder()
             .name(brand2.getName())
-            .description(Constants.DEFAULT_DESCRIPTION)
+            .description(TestConstants.DEFAULT_DESCRIPTION)
             .build();
 
         // Act
@@ -164,7 +164,7 @@ public class BrandServiceTest {
         // Arrange
         BrandFilter filter = BrandFilter
             .newBuilder()
-            .name(Constants.DEFAULT_NON_EXISTENT_BRAND_NAME)
+            .name(TestConstants.DEFAULT_NON_EXISTENT_BRAND_NAME)
             .build();
 
         // Act
@@ -179,8 +179,8 @@ public class BrandServiceTest {
         // Arrange
         BrandInput input = BrandInput
             .newBuilder()
-            .name(Constants.DEFAULT_BRAND_NAME)
-            .logoUrl(Constants.DEFAULT_BRAND_LOGO_URL)
+            .name(TestConstants.DEFAULT_BRAND_NAME)
+            .logoUrl(TestConstants.DEFAULT_BRAND_LOGO_URL)
             .build();
 
         // Act
@@ -197,7 +197,7 @@ public class BrandServiceTest {
         // Arrange
         BrandInput input = BrandInput
             .newBuilder()
-            .name(Constants.DEFAULT_BRAND_NAME)
+            .name(TestConstants.DEFAULT_BRAND_NAME)
             .build();
 
         // Act
@@ -206,7 +206,7 @@ public class BrandServiceTest {
 
         // Assert
         result.isInstanceOf(DataIntegrityViolationException.class);
-        result.hasMessage(Constants.INVALID_BRAND_ERROR_MESSAGE);
+        result.hasMessage(TestConstants.INVALID_BRAND_ERROR_MESSAGE);
     }
 
     @Test
@@ -217,7 +217,7 @@ public class BrandServiceTest {
             .id(brand1.getId().toString())
             .name(String.format("%s Updated", brand1.getName()))
             .logoUrl(brand1.getLogoUrl())
-            .description(Constants.DEFAULT_DESCRIPTION)
+            .description(TestConstants.DEFAULT_DESCRIPTION)
             .build();
 
         // Act
@@ -235,10 +235,10 @@ public class BrandServiceTest {
         // Arrange
         BrandInput input = BrandInput
             .newBuilder()
-            .id(Constants.NON_EXISTENT_ID_STRING)
+            .id(TestConstants.NON_EXISTENT_ID_STRING)
             .name(String.format("%s Updated", brand1.getName()))
             .logoUrl(brand1.getLogoUrl())
-            .description(Constants.DEFAULT_DESCRIPTION)
+            .description(TestConstants.DEFAULT_DESCRIPTION)
             .build();
 
         // Act
@@ -247,7 +247,7 @@ public class BrandServiceTest {
 
         // Assert
         result.isInstanceOf(IllegalArgumentException.class);
-        result.hasMessage(Constants.NON_EXISTENT_ID_ERROR_MESSAGE);
+        result.hasMessage(TestConstants.NON_EXISTENT_ID_ERROR_MESSAGE);
     }
 
     @Test
@@ -257,7 +257,7 @@ public class BrandServiceTest {
             .newBuilder()
             .id(brand1.getId().toString())
             .name(String.format("%s Updated", brand1.getName()))
-            .description(Constants.DEFAULT_DESCRIPTION)
+            .description(TestConstants.DEFAULT_DESCRIPTION)
             .build();
 
         // Act
@@ -269,7 +269,7 @@ public class BrandServiceTest {
 
         // Assert
         result.isInstanceOf(PropertyValueException.class);
-        result.hasMessage(Constants.INVALID_BRAND_ERROR_MESSAGE);
+        result.hasMessage(TestConstants.INVALID_BRAND_ERROR_MESSAGE);
     }
 
     @Test
@@ -298,11 +298,11 @@ public class BrandServiceTest {
         // Act
         AbstractThrowableAssert<?, ? extends Throwable> result =
             assertThatThrownBy(() ->
-                brandService.delete(Constants.NON_EXISTENT_ID_STRING)
+                brandService.delete(TestConstants.NON_EXISTENT_ID_STRING)
             );
 
         // Assert
         result.isInstanceOf(IllegalArgumentException.class);
-        result.hasMessage(Constants.NON_EXISTENT_ID_ERROR_MESSAGE);
+        result.hasMessage(TestConstants.NON_EXISTENT_ID_ERROR_MESSAGE);
     }
 }

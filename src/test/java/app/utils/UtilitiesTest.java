@@ -5,8 +5,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import app.entities.BrandDAO;
 import app.generated.types.Brand;
-import app.test.utils.Constants;
 import app.test.utils.EntityDaoCreator;
+import app.test.utils.TestConstants;
 import org.assertj.core.api.AbstractThrowableAssert;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -112,8 +112,8 @@ public class UtilitiesTest {
     public void getEntityGQLOrNullShouldReturnEntityQLForEntity() {
         // Arrange
         BrandDAO entity = EntityDaoCreator.createBrand(
-            Constants.DEFAULT_BRAND_NAME,
-            Constants.DEFAULT_BRAND_LOGO_URL
+            TestConstants.DEFAULT_BRAND_NAME,
+            TestConstants.DEFAULT_BRAND_LOGO_URL
         );
 
         // Act
@@ -140,10 +140,10 @@ public class UtilitiesTest {
         // Arrange
 
         // Act
-        String result = Utilities.toGraphQLId(Constants.DEFAULT_ID);
+        String result = Utilities.toGraphQLId(TestConstants.DEFAULT_ID);
 
         // Assert
-        assertThat(result).isEqualTo(Constants.DEFAULT_ID_STRING);
+        assertThat(result).isEqualTo(TestConstants.DEFAULT_ID_STRING);
     }
 
     @Test

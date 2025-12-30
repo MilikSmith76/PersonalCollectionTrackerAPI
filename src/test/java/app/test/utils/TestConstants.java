@@ -1,6 +1,6 @@
 package app.test.utils;
 
-public class Constants {
+public class TestConstants {
 
     public static final String MYSQL_IMAGE = "mysql:9.4.0";
 

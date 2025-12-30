@@ -5,10 +5,10 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import app.entities.BrandDAO;
 import app.generated.types.BrandFilter;
-import app.test.utils.Constants;
 import app.test.utils.EntityDaoCreator;
 import app.test.utils.IntegrationTest;
 import app.test.utils.SqlFiles;
+import app.test.utils.TestConstants;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
@@ -38,13 +38,13 @@ public class BrandRepositoryITest extends IntegrationTest {
     public void setUp() {
         brand1 =
         EntityDaoCreator.createBrand(
-            Constants.DEFAULT_FIRST_BRAND_NAME,
-            Constants.DEFAULT_FIRST_BRAND_LOGO_URL
+            TestConstants.DEFAULT_FIRST_BRAND_NAME,
+            TestConstants.DEFAULT_FIRST_BRAND_LOGO_URL
         );
         brand2 =
         EntityDaoCreator.createBrand(
-            Constants.DEFAULT_SECOND_BRAND_NAME,
-            Constants.DEFAULT_SECOND_BRAND_LOGO_URL
+            TestConstants.DEFAULT_SECOND_BRAND_NAME,
+            TestConstants.DEFAULT_SECOND_BRAND_LOGO_URL
         );
         brandRepository.save(brand1);
         brandRepository.save(brand2);
@@ -89,7 +89,7 @@ public class BrandRepositoryITest extends IntegrationTest {
 
         // Act
         Optional<BrandDAO> result = brandRepository.findById(
-            Constants.NON_EXISTENT_ID
+            TestConstants.NON_EXISTENT_ID
         );
 
         // Assert
@@ -118,13 +118,13 @@ public class BrandRepositoryITest extends IntegrationTest {
     @Test
     public void findByCriteriaShouldFilterBrands() {
         // Arrange
-        brand2.setDescription(Constants.DEFAULT_DESCRIPTION);
+        brand2.setDescription(TestConstants.DEFAULT_DESCRIPTION);
         brandRepository.save(brand2);
 
         BrandFilter filter = BrandFilter
             .newBuilder()
             .name(brand2.getName())
-            .description(Constants.DEFAULT_DESCRIPTION)
+            .description(TestConstants.DEFAULT_DESCRIPTION)
             .build();
 
         // Act
@@ -145,7 +145,7 @@ public class BrandRepositoryITest extends IntegrationTest {
         // Arrange
         BrandFilter filter = BrandFilter
             .newBuilder()
-            .name(Constants.DEFAULT_NON_EXISTENT_BRAND_NAME)
+            .name(TestConstants.DEFAULT_NON_EXISTENT_BRAND_NAME)
             .build();
 
         // Act
@@ -159,8 +159,8 @@ public class BrandRepositoryITest extends IntegrationTest {
     public void saveShouldCreateNewBrand() {
         // Arrange
         BrandDAO newBrand = EntityDaoCreator.createBrand(
-            Constants.DEFAULT_BRAND_NAME,
-            Constants.DEFAULT_BRAND_LOGO_URL
+            TestConstants.DEFAULT_BRAND_NAME,
+            TestConstants.DEFAULT_BRAND_LOGO_URL
         );
 
         // Act
@@ -175,8 +175,8 @@ public class BrandRepositoryITest extends IntegrationTest {
     public void saveShouldErrorForInvalidNewBrand() {
         // Arrange
         BrandDAO newBrand = EntityDaoCreator.createBrand(
-            Constants.DEFAULT_BRAND_NAME,
-            Constants.DEFAULT_BRAND_LOGO_URL
+            TestConstants.DEFAULT_BRAND_NAME,
+            TestConstants.DEFAULT_BRAND_LOGO_URL
         );
         newBrand.setLogoUrl(null);
 
@@ -186,7 +186,7 @@ public class BrandRepositoryITest extends IntegrationTest {
 
         // Assert
         result.isInstanceOf(DataIntegrityViolationException.class);
-        result.hasMessage(Constants.INVALID_BRAND_ERROR_MESSAGE);
+        result.hasMessage(TestConstants.INVALID_BRAND_ERROR_MESSAGE);
     }
 
     @Test
@@ -220,6 +220,6 @@ public class BrandRepositoryITest extends IntegrationTest {
 
         // Assert
         result.isInstanceOf(DataIntegrityViolationException.class);
-        result.hasMessage(Constants.INVALID_BRAND_ERROR_MESSAGE);
+        result.hasMessage(TestConstants.INVALID_BRAND_ERROR_MESSAGE);
     }
 }

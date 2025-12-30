@@ -9,7 +9,7 @@ import org.testcontainers.mysql.MySQLContainer;
 public abstract class IntegrationTest {
 
     private static final MySQLContainer mySQLContainer = new MySQLContainer(
-        Constants.MYSQL_IMAGE
+        TestConstants.MYSQL_IMAGE
     )
         .withDatabaseName("databasename")
         .withUsername("user")

@@ -15,11 +15,11 @@ import app.generated.client.UpdateBrandProjectionRoot;
 import app.generated.types.BrandFilter;
 import app.generated.types.BrandInput;
 import app.repositories.BrandRepository;
-import app.test.utils.Constants;
 import app.test.utils.EntityAttributes;
 import app.test.utils.EntityDaoCreator;
 import app.test.utils.GqlIntegrationTest;
 import app.test.utils.SqlFiles;
+import app.test.utils.TestConstants;
 import com.netflix.graphql.dgs.DgsQueryExecutor;
 import com.netflix.graphql.dgs.client.codegen.GraphQLQueryRequest;
 import com.netflix.graphql.dgs.test.EnableDgsTest;
@@ -71,13 +71,13 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
     public void setUp() {
         brand1 =
         EntityDaoCreator.createBrand(
-            Constants.DEFAULT_FIRST_BRAND_NAME,
-            Constants.DEFAULT_FIRST_BRAND_LOGO_URL
+            TestConstants.DEFAULT_FIRST_BRAND_NAME,
+            TestConstants.DEFAULT_FIRST_BRAND_LOGO_URL
         );
         brand2 =
         EntityDaoCreator.createBrand(
-            Constants.DEFAULT_SECOND_BRAND_NAME,
-            Constants.DEFAULT_SECOND_BRAND_LOGO_URL
+            TestConstants.DEFAULT_SECOND_BRAND_NAME,
+            TestConstants.DEFAULT_SECOND_BRAND_LOGO_URL
         );
         brandRepository.save(brand1);
         brandRepository.save(brand2);
@@ -148,7 +148,7 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
         GraphQLQueryRequest graphQLQueryRequest = new GraphQLQueryRequest(
             new BrandGraphQLQuery.Builder()
                 .queryName(brandQueryName)
-                .id(Constants.NON_EXISTENT_ID_STRING)
+                .id(TestConstants.NON_EXISTENT_ID_STRING)
                 .build(),
             new BrandProjectionRoot<>().id().name().logoUrl()
         );
@@ -161,9 +161,9 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
         // Assert
         assertThat(result.size()).isEqualTo(1);
         assertThat(result.getFirst().getErrorType().toString())
-            .isEqualTo(Constants.GRAPH_QL_INTERNAL_ERROR);
+            .isEqualTo(TestConstants.GRAPH_QL_INTERNAL_ERROR);
         assertThat(result.getFirst().getMessage())
-            .isEqualTo(Constants.FULL_NON_EXISTENT_ID_ERROR_MESSAGE);
+            .isEqualTo(TestConstants.FULL_NON_EXISTENT_ID_ERROR_MESSAGE);
     }
 
     @Test
@@ -199,13 +199,13 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
     @Test
     public void brandsQueryShouldFilterBrands() {
         // Arrange
-        brand2.setDescription(Constants.DEFAULT_DESCRIPTION);
+        brand2.setDescription(TestConstants.DEFAULT_DESCRIPTION);
         brandRepository.save(brand2);
 
         BrandFilter filter = BrandFilter
             .newBuilder()
-            .name(Constants.DEFAULT_BRAND_NAME)
-            .description(Constants.DEFAULT_DESCRIPTION)
+            .name(TestConstants.DEFAULT_BRAND_NAME)
+            .description(TestConstants.DEFAULT_DESCRIPTION)
             .build();
 
         GraphQLQueryRequest graphQLQueryRequest = new GraphQLQueryRequest(
@@ -237,7 +237,7 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
         // Arrange
         BrandFilter filter = BrandFilter
             .newBuilder()
-            .description(Constants.DEFAULT_DESCRIPTION)
+            .description(TestConstants.DEFAULT_DESCRIPTION)
             .build();
 
         GraphQLQueryRequest graphQLQueryRequest = new GraphQLQueryRequest(
@@ -263,8 +263,8 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
         // Arrange
         BrandInput input = BrandInput
             .newBuilder()
-            .name(Constants.DEFAULT_BRAND_NAME)
-            .logoUrl(Constants.DEFAULT_BRAND_LOGO_URL)
+            .name(TestConstants.DEFAULT_BRAND_NAME)
+            .logoUrl(TestConstants.DEFAULT_BRAND_LOGO_URL)
             .build();
 
         GraphQLQueryRequest graphQLQueryRequest = new GraphQLQueryRequest(
@@ -295,7 +295,7 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
         // Arrange
         BrandInput input = BrandInput
             .newBuilder()
-            .name(Constants.DEFAULT_BRAND_NAME)
+            .name(TestConstants.DEFAULT_BRAND_NAME)
             .build();
 
         GraphQLQueryRequest graphQLQueryRequest = new GraphQLQueryRequest(
@@ -314,7 +314,7 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
         // Assert
         assertThat(result.size()).isEqualTo(1);
         assertThat(result.getFirst().getErrorType().toString())
-            .isEqualTo(Constants.GRAPH_QL_INVALID_ARGUMENT_ERROR);
+            .isEqualTo(TestConstants.GRAPH_QL_INVALID_ARGUMENT_ERROR);
     }
 
     @Test
@@ -325,7 +325,7 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
             .id(brand2.getId().toString())
             .name(String.format("%s Updated", brand2.getName()))
             .logoUrl(brand2.getLogoUrl())
-            .description(Constants.DEFAULT_DESCRIPTION)
+            .description(TestConstants.DEFAULT_DESCRIPTION)
             .build();
 
         GraphQLQueryRequest graphQLQueryRequest = new GraphQLQueryRequest(
@@ -361,10 +361,10 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
         // Arrange
         BrandInput input = BrandInput
             .newBuilder()
-            .id(Constants.NON_EXISTENT_ID_STRING)
-            .name(Constants.DEFAULT_BRAND_NAME)
+            .id(TestConstants.NON_EXISTENT_ID_STRING)
+            .name(TestConstants.DEFAULT_BRAND_NAME)
             .logoUrl(brand2.getLogoUrl())
-            .description(Constants.DEFAULT_DESCRIPTION)
+            .description(TestConstants.DEFAULT_DESCRIPTION)
             .build();
 
         GraphQLQueryRequest graphQLQueryRequest = new GraphQLQueryRequest(
@@ -383,9 +383,9 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
         // Assert
         assertThat(result.size()).isEqualTo(1);
         assertThat(result.getFirst().getErrorType().toString())
-            .isEqualTo(Constants.GRAPH_QL_INTERNAL_ERROR);
+            .isEqualTo(TestConstants.GRAPH_QL_INTERNAL_ERROR);
         assertThat(result.getFirst().getMessage())
-            .isEqualTo(Constants.FULL_NON_EXISTENT_ID_ERROR_MESSAGE);
+            .isEqualTo(TestConstants.FULL_NON_EXISTENT_ID_ERROR_MESSAGE);
     }
 
     @Test
@@ -395,7 +395,7 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
             .newBuilder()
             .id(brand2.getId().toString())
             .name(String.format("%s Updated", brand2.getName()))
-            .description(Constants.DEFAULT_DESCRIPTION)
+            .description(TestConstants.DEFAULT_DESCRIPTION)
             .build();
 
         GraphQLQueryRequest graphQLQueryRequest = new GraphQLQueryRequest(
@@ -414,7 +414,7 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
         // Assert
         assertThat(result.size()).isEqualTo(1);
         assertThat(result.getFirst().getErrorType().toString())
-            .isEqualTo(Constants.GRAPH_QL_INVALID_ARGUMENT_ERROR);
+            .isEqualTo(TestConstants.GRAPH_QL_INVALID_ARGUMENT_ERROR);
     }
 
     @Test
@@ -453,7 +453,7 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
         GraphQLQueryRequest graphQLQueryRequest = new GraphQLQueryRequest(
             new DeleteBrandGraphQLQuery.Builder()
                 .queryName(deleteBrandMutationName)
-                .id(Constants.NON_EXISTENT_ID_STRING)
+                .id(TestConstants.NON_EXISTENT_ID_STRING)
                 .build()
         );
 
@@ -465,8 +465,8 @@ public class BrandDataFetcherITest extends GqlIntegrationTest {
         // Assert
         assertThat(result.size()).isEqualTo(1);
         assertThat(result.getFirst().getErrorType().toString())
-            .isEqualTo(Constants.GRAPH_QL_INTERNAL_ERROR);
+            .isEqualTo(TestConstants.GRAPH_QL_INTERNAL_ERROR);
         assertThat(result.getFirst().getMessage())
-            .isEqualTo(Constants.FULL_NON_EXISTENT_ID_ERROR_MESSAGE);
+            .isEqualTo(TestConstants.FULL_NON_EXISTENT_ID_ERROR_MESSAGE);
     }
 }
